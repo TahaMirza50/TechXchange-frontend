@@ -3,6 +3,7 @@ import StartPage from "./pages/StartPage";
 import { useState } from "react";
 import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
+import AdminHomePage from "./pages/AdminHomePage"
 
 function App() {
   const [isLoggedIn,setIsLoggedIn] = useState(false);
@@ -11,7 +12,7 @@ function App() {
   return (
     <BrowserRouter>
     <Routes>
-       <Route path="/" element={isLoggedIn? <HomePage/>:<StartPage/>}/>
+       <Route path="/" element={isLoggedIn? <HomePage/>:<AdminHomePage/>}/>
        <Route path="/login" element={<Login/>}/>
        <Route path="/register"/>
     </Routes>
