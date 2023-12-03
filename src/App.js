@@ -3,7 +3,7 @@ import StartPage from "./pages/StartPage";
 import { useState } from "react";
 import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
-import AdminHomePage from "./pages/AdminHomePage"
+import AdminHomePage from "./pages/AdminPortal/AdminHomePage"
 
 function App() {
   const [isLoggedIn,setIsLoggedIn] = useState(false);
