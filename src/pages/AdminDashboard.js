@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 
-const HomePage = () => {
+const AdminDashboard = () => {
     const cookies = new Cookies();
     const navigate = useNavigate();
 
@@ -13,10 +13,10 @@ const HomePage = () => {
 
     return ( 
         <div>
-            <h1>HOmepage</h1>
+            <h1>Admin</h1>
             <button onClick={handleLogOut}>Log out.</button>
         </div>
      );
 }
  
-export default HomePage;
+export default AdminDashboard;
