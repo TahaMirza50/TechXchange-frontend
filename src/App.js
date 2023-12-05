@@ -16,7 +16,6 @@ function App() {
        <Route path="*" element={isLoggedIn? <HomePage/>:<AdminHomePage/>}/>
        <Route path="/login" element={<Login/>}/>
        <Route path="/register"/>
-       <Route path="/admin/users" element={<AdminUsersPage/>}/>
     </Routes>
     </BrowserRouter>
   );
