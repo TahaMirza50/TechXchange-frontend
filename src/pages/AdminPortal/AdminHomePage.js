@@ -3,6 +3,8 @@ import LoggedInNavbar from '../../components/LoggedInNavbar'
 import SideBar from '../../components/AdminComponents/SideBar'
 import { Route, Routes } from 'react-router-dom'
 import AdminUsersPage from './AdminUsersPage'
+import AdminCategoriesPage from './AdminCategoriesPage'
+import AdminAdvertisementsPage from './AdminAdvertisementsPage'
 
 const AdminHomePage = () => {
     return(
@@ -16,6 +18,8 @@ const AdminHomePage = () => {
 
             <Routes>
                 <Route path="/" element={<AdminUsersPage/>}/>
+                <Route path="/categories" element={<AdminCategoriesPage/>}/>
+                <Route path="/advertisements" element={<AdminAdvertisementsPage/>}/>
             </Routes>
             
         </div>
