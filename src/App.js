@@ -7,6 +7,9 @@ import AdminDashboard from "./pages/AdminDashboard";
 import Layout from "./components/Layout";
 import RequiredAuth from "./components/RequireAuth";
 
+import AdminHomePage from "./pages/AdminPortal/AdminHomePage"
+import AdminUsersPage from "./pages/AdminPortal/AdminUsersPage";
+
 function App() {
 
   // useEffect(() => {
@@ -70,6 +73,7 @@ function App() {
 
   return (
     <Routes>
+
       <Route path="/" element={<Layout />}>
         {/* public routes */}
         <Route path="/" element={<StartPage/>} />
@@ -84,7 +88,7 @@ function App() {
         </Route>
 
         <Route element={<RequiredAuth allowedRole="admin"/>}>
-          <Route path="/admin-dashboard" element={<AdminDashboard/>}/>
+          <Route path="/admin-dashboard" element={<AdminHomePage/>}/>
         </Route>
 
       </Route>
