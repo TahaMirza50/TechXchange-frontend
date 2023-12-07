@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import logo from '../assets/images/logo.png';
-import api from "../services/api";
+import {api} from "../services/api";
 import ModalAlerts from "../components/ModalAlerts";
 
 const Register = () => {

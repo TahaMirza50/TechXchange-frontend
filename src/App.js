@@ -1,69 +1,94 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import StartPage from "./pages/StartPage";
-import { useEffect, useState } from "react";
 import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Cookies from "universal-cookie";
-import { jwtDecode } from "jwt-decode";
 import AdminDashboard from "./pages/AdminDashboard";
+import Layout from "./components/Layout";
+import RequiredAuth from "./components/RequireAuth";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
 
-  const Admin = () => {
-    if (isAdmin) {
-      return <AdminDashboard />  //add admin component
-    } else {
-      return <HomePage />
-    }
-  }
+  // useEffect(() => {
+  //   handleLogin();
+  // }, []);
 
-  useEffect(() => {
-    console.log("Checking tokens...")
-    const cookies = new Cookies();
-    const accessToken = cookies.get("accessToken");
-    const refreshToken = cookies.get("refreshToken");
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isAdmin, setIsAdmin] = useState(false);
 
-    console.log("Access Token:", accessToken);
+  // const Admin = () => {
+  //   if (isAdmin) {
+  //     return <AdminDashboard />  //add admin component
+  //   } else {
+  //     return <HomePage />
+  //   }
+  // }
 
-    if (accessToken && refreshToken) {
-      try {
-        const decodedAccessToken = jwtDecode(accessToken);
+  // const handleLogin = () => {
+  //   console.log("Checking tokens...")
 
-        if (decodedAccessToken.exp * 1000 > Date.now()) {
-          setIsLoggedIn(true);
-        } else {
-          const decodedRefreshToken = jwtDecode(refreshToken);
+  //   const accessToken = localStorage.getItem("accessToken");
+  //   const refreshToken = localStorage.getItem("refreshToken");
 
-          if (decodedRefreshToken.exp * 1000 > Date.now()) {
-            setIsLoggedIn(true);
-          }
+  //   if (accessToken && refreshToken) {
+  //     console.log("hello1" + accessToken);
+  //     try {
+  //       const decodedAccessToken = jwtDecode(accessToken);
+  //       if (decodedAccessToken.role === "admin") {
+  //         setIsAdmin(true);
+  //       }
+  //       setIsLoggedIn(true);
+  //       api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
 
-        }
+  //       // if (decodedAccessToken.exp * 1000 > Date.now()) {
+  //       //   if (decodedAccessToken.role === "admin") {
+  //       //     setIsAdmin(true);
+  //       //   }
+  //       //   setIsLoggedIn(true);
+  //       //   api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+  //       // } else {
+  //       //   const decodedRefreshToken = jwtDecode(refreshToken);
 
-        if (decodedAccessToken.role === "admin") {
-          setIsAdmin(true);
-        }
+  //       //   if (decodedRefreshToken.exp * 1000 > Date.now()) {
+  //       //     setIsLoggedIn(true);
+  //       //     api.defaults.headers.common['Authorization'] = `Bearer ${refreshToken}`;
+  //       //   } else {
+  //       //     setIsLoggedIn(false);
+  //       //   }
 
-        return;
-      } catch (error) {
-        console.error("Error decoding tokens:", error);
-      }
-    }
-    setIsAdmin(false);
-    setIsLoggedIn(false);
-  }, [])
+  //       // }
+
+  //       return;
+  //     } catch (error) {
+  //       console.error("Error decoding tokens:", error);
+  //     }
+  //   }
+  //   setIsAdmin(false);
+  //   setIsLoggedIn(false);
+  // }
+  // console.log()
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={isLoggedIn ? Admin() : <StartPage />} />
-        <Route path="/login" element={isLoggedIn ? <Navigate to="/" /> : <Login />} />
-        <Route path="/register" element={isLoggedIn ? <Navigate to="/" /> : <Register />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        {/* public routes */}
+        <Route path="/" element={<StartPage/>} />
+        <Route path="/login" element={<Login/>} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/unauthorized" element={<p>Unauthorized</p>}/>
+
+
+        <Route element={<RequiredAuth allowedRole="user"/>}>
+          <Route path="/home" element={<HomePage/>}/>
+          <Route path="/profile" element={<p>profile</p>}/>
+        </Route>
+
+        <Route element={<RequiredAuth allowedRole="admin"/>}>
+          <Route path="/admin-dashboard" element={<AdminDashboard/>}/>
+        </Route>
+
+      </Route>
+    </Routes>
   );
 }
 

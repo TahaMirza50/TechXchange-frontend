@@ -13,6 +13,7 @@ const AdminDashboard = () => {
 
     return ( 
         <div>
+                        <button onClick={() => navigate("/home")}>go to homepage</button>
             <h1>Admin</h1>
             <button onClick={handleLogOut}>Log out.</button>
         </div>

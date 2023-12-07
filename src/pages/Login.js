@@ -1,21 +1,24 @@
-import { useState } from "react";
+import { useState} from "react";
 import logo from '../assets/images/logo.png'
-import api from "../services/api";
-import Cookies from "universal-cookie";
+import {api} from "../services/api";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import ModalAlerts from "../components/ModalAlerts";
+import useAuth from "../hooks/useAuth";
 
-const Login = () => {
+const Login = ({ onLogin }) => {
+    const { setAuth } = useAuth();
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
-    const [isPending, setIsPending] = useState(false);
-    const [openModal, setOpenModal] = useState(false);
-    const [heading,setHeading] = useState('');
-    const [message,setMessage] = useState('');
-    const cookies = new Cookies();
-    const navigate = useNavigate();
 
+    const [isPending, setIsPending] = useState(false);
+
+    const [openModal, setOpenModal] = useState(false);
+    const [heading, setHeading] = useState('');
+    const [message, setMessage] = useState('');
+
+    const navigate = useNavigate();
+ 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -23,37 +26,39 @@ const Login = () => {
             await api.post("/auth/login", {
                 email,
                 password: pass
+            }, {
+                headers: { 'Content-Type': 'application/json' },
+                withCredentials: true
             }).then((res) => {
                 if (res.status === 200) {
-                    const { accessToken, refreshToken } = res.data;
-        
-                    cookies.set("accessToken", accessToken);
-                    cookies.set("refreshToken", refreshToken);
-                    
+                    const {accessToken} = res.data;
+
+                    localStorage.setItem("accessToken", accessToken);
+
+
                     const decodedToken = jwtDecode(accessToken);
-                    console.log("Decoded Token:", decodedToken);
-                    if (decodedToken) {
-                        navigate(0);
-                    //   if (decodedToken.role === "admin") {
-                    //     navigate("/admin-dashboard");
-                    //   } else {
-                    //     navigate(0);
-                    //   }
-        
+                    const role = decodedToken.role;
+                    const email = decodedToken.email;
+                    setAuth({ email, role, accessToken });
+                    if (decodedToken.role === "admin") {
+                        navigate("/admin-dashboard");
                     } else {
-                      console.error("Failed to decode access token");
+                        navigate("/home")
                     }
-                  }
+                }
             })
         } catch (error) {
-            setIsPending(false);
+            console.log(error)
             setHeading("Error");
-            setMessage(error.response.data);
+            if (!error?.response) {
+                setMessage("No server response.");
+            } else if (error.response?.status === 400) {
+                setMessage(error.response.data);
+            } else {
+                setMessage("Login failed.")
+            }
+            setIsPending(false);
             setOpenModal(true);
-            // return ModalAlerts({Heading: "Error", Text: error.response.data});
-            // if(error.response.status === 400){
-            //     alert(error.response.data);
-            // }
         }
     }
 
@@ -84,7 +89,7 @@ const Login = () => {
                                     <div className="border-t-4 border-white border-solid rounded-full h-8 w-8 animate-spin"></div>
                                 </div>
                             </button>}
-                            {openModal && <ModalAlerts heading={heading} message={message} onClose={() => {setOpenModal(false)}}/>}
+                            {openModal && <ModalAlerts heading={heading} message={message} onClose={() => { setOpenModal(false) }} />}
                             <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                                 Don't have an account yet? <a href="/register" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
                             </p>
