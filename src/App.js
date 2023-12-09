@@ -6,7 +6,7 @@ import Register from "./pages/Register";
 import AdminDashboard from "./pages/AdminDashboard";
 import Layout from "./components/Layout";
 import RequiredAuth from "./components/RequireAuth";
-
+import ChatRoom from "./pages/ChatRoom";
 import AdminHomePage from "./pages/AdminPortal/AdminHomePage"
 import AdminUsersPage from "./pages/AdminPortal/AdminUsersPage";
 
@@ -84,6 +84,7 @@ function App() {
 
         <Route element={<RequiredAuth allowedRole="user"/>}>
           <Route path="/home" element={<HomePage/>}/>
+          <Route path="/chats" element={<ChatRoom/>}/>
           <Route path="/profile" element={<p>profile</p>}/>
         </Route>
 

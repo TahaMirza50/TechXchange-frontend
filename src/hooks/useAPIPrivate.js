@@ -33,7 +33,7 @@ const useApiPrivate = () => {
                 if(error?.response.status === 403){
                     console.log("hello")
                     localStorage.removeItem('accessToken');
-                    navigate('/login');
+                    navigate(0);
                 }
                 return Promise.reject(error);
             }
