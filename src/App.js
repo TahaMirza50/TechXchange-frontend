@@ -7,7 +7,8 @@ import AdminDashboard from "./pages/AdminDashboard";
 import Layout from "./components/Layout";
 import RequiredAuth from "./components/RequireAuth";
 
-import AdminHomePage from "./pages/AdminPortal/AdminHomePage"
+import AdminCategoriesPage from "./pages/AdminPortal/AdminCategoriesPage";
+import AdminAdvertisementsPage from "./pages/AdminPortal/AdminAdvertisementsPage";
 import AdminUsersPage from "./pages/AdminPortal/AdminUsersPage";
 
 function App() {
@@ -73,26 +74,31 @@ function App() {
 
   return (
     <Routes>
+  <Route path="/" element={<Layout />}>
+    {/* public routes */}
+    <Route path="/" element={<StartPage />} />
+    <Route path="/login" element={<Login />} />
+    <Route path="/register" element={<Register />} />
+    <Route path="/unauthorized" element={<p>Unauthorized</p>} />
 
-      <Route path="/" element={<Layout />}>
-        {/* public routes */}
-        <Route path="/" element={<StartPage/>} />
-        <Route path="/login" element={<Login/>} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/unauthorized" element={<p>Unauthorized</p>}/>
+    <Route element={<RequiredAuth allowedRole="user" />}>
+      <Route path="/home" element={<HomePage />} />
+      <Route path="/profile" element={<p>profile</p>} />
+    </Route>
 
-
-        <Route element={<RequiredAuth allowedRole="user"/>}>
-          <Route path="/home" element={<HomePage/>}/>
-          <Route path="/profile" element={<p>profile</p>}/>
-        </Route>
-
-        <Route element={<RequiredAuth allowedRole="admin"/>}>
-          <Route path="/admin-dashboard" element={<AdminHomePage/>}/>
-        </Route>
-
+    <Route element={<RequiredAuth allowedRole="admin" />}>
+      <Route
+        path="/admin-dashboard"
+        element={<AdminDashboard />}
+      >
+        <Route index element={<AdminUsersPage />} />
+        <Route path="categories" element={<AdminCategoriesPage />} />
+        <Route path="advertisements" element={<AdminAdvertisementsPage />} />
       </Route>
-    </Routes>
+    </Route>
+  </Route>
+</Routes>
+
   );
 }
 

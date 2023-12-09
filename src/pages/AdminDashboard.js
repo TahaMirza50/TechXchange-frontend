@@ -1,22 +1,30 @@
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
+import {Outlet} from "react-router-dom"
+import LoggedInNavbar from '../components/LoggedInNavbar'
+import SideBar from '../components/AdminComponents/SideBar'
+import adminProfileImage from '../assets/images/adminProfileimage.png'
 
 const AdminDashboard = () => {
     const cookies = new Cookies();
     const navigate = useNavigate();
 
+
     const handleLogOut = () => {
-        cookies.remove("accessToken");
-        cookies.remove("refreshToken");
-        navigate(0);
+        localStorage.removeItem('accessToken');
+        navigate("/");
     }
 
     return ( 
-        <div>
-                        <button onClick={() => navigate("/home")}>go to homepage</button>
-            <h1>Admin</h1>
-            <button onClick={handleLogOut}>Log out.</button>
+        <div className="h-screen bg-white ">
+        <div className='flex flex-col space-y-16'>
+            <LoggedInNavbar name="Admin" profileImage={adminProfileImage}/>
+            <SideBar handleLogOut={handleLogOut}/>
         </div>
+
+        <Outlet/>
+        
+    </div>
      );
 }
  
