@@ -5,12 +5,16 @@ import HomePageNavbar from "../components/HomePageNavbar";
 import img from "../assets/images/arthur-morgan.png"
 import CategoryCard from "../components/CategoryCard";
 import Footer from "../components/Footer";
+import { useDispatch } from "react-redux";
+import { profile } from "../features/userProfile";
 
 const HomePage = () => {
-    const [user, setUser] = useState({});
     const [categories, setCategories] = useState([]);
     const [categoryOne,setCategoryOne] = useState();
     const [categoryTwo,setCategoryTwo] = useState();
+
+    const dispatch = useDispatch();
+
     const apiPrivate = useApiPrivate();
     const navigate = useNavigate();
 
@@ -22,7 +26,7 @@ const HomePage = () => {
             try {
                 const response = await apiPrivate.get('profile/get');
                 if (isMounted) {
-                    setUser(response.data);
+                    dispatch(profile({firstName: response.data.firstName,lastName:response.data.lastName,profileID:response.data._id}));
                 }
             } catch (error) {
                 console.error(error);
@@ -34,6 +38,8 @@ const HomePage = () => {
                 const response = await apiPrivate.get('category');
                 if (isMounted && response.status === 200) {
                     setCategories(response.data);
+                    setCategoryOne(response.data[0].name)
+                    setCategoryTwo(response.data[3].name)
                 }
             } catch (error) {
                 console.error(error);
@@ -47,19 +53,16 @@ const HomePage = () => {
             isMounted = false;
             controller.abort();
         };
-    }, []);
+    }, [apiPrivate,dispatch]);
 
 
     const handlereload = async () => {
         console.log(categories);
-        console.log(user);
-
         // try {
         //     const res = await apiPrivate.get('profile/get');
         //     console.log(res);
         // } catch (error) {
         // }
-
     }
 
     const colors = [
@@ -71,7 +74,7 @@ const HomePage = () => {
 
     return (
         <div>
-            <HomePageNavbar />
+            <HomePageNavbar/>
             <div className="flex flex-col items-center mx-28">
                 <section class="bg-gradient-to-r from-sky-500 to-blue-900 my-10 ">
                     <div class="grid max-w-screen-xl px-16 pt-12 mx-auto lg:gap-8 xl:gap-2 lg:pt-12 lg:grid-cols-12">
@@ -93,10 +96,10 @@ const HomePage = () => {
                 </div>
                 </section>
                 <section className="w-full my-10 text-left">
-                    <h4 className="text-2xl font-extrabold dark:text-white pb-10">Latest laptops</h4>
+                    <h4 className="text-2xl font-extrabold dark:text-white pb-10">Latest {categoryOne}</h4>
                 </section>
                 <section className="w-full my-10 text-left">
-                    <h4 className="text-2xl font-extrabold dark:text-white pb-10">Latest gaming pcs</h4>
+                    <h4 className="text-2xl font-extrabold dark:text-white pb-10">Latest {categoryTwo}</h4>
                 </section>
             </div>
 

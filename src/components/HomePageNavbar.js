@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import logo from '../assets/images/logo.png'
 
 const HomePageNavbar = () => {
@@ -30,14 +31,14 @@ const HomePageNavbar = () => {
                         </li>
                         <div className="flex items-center">
                             <li>
-                                <a href="/profile" className=" block py-2 px-3 text-gray-900 rounded hover:text-white dark:text-white hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-white md:p-0 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-gray-700 md:dark:hover:bg-transparent">
+                                <Link to="/profile" className=" block py-2 px-3 text-gray-900 rounded hover:text-white dark:text-white hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-white md:p-0 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-gray-700 md:dark:hover:bg-transparent">
                                     <div className='flex gap-1 items-center'>
                                         <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 18">
                                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 8a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm-2 3h4a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z" />
                                         </svg>
                                         <p>Profile</p>
                                     </div>
-                                </a>
+                                </Link>
                             </li>
                         </div>
                         <div className="flex items-center">
@@ -82,10 +83,10 @@ const HomePageNavbar = () => {
                 <div className="flex flex-row items-center">
                     <ul className="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm">
                         <li>
-                            <a href="#" className="text-white dark:text-white hover:text-black" aria-current="page">My Adverts</a>
+                            <Link to="#" className="text-white dark:text-white hover:text-black" aria-current="page">My Adverts</Link>
                         </li>
                         <li>
-                            <a href="/chats" className="text-white dark:text-white hover:text-black">My Chats</a>
+                            <Link to="/chats" className="text-white dark:text-white hover:text-black">My Chats</Link>
                         </li>
                         <li>
                             <a href="#" className="text-white dark:text-white hover:text-black">My Wishlist</a>
