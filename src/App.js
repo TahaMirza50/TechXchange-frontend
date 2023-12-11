@@ -12,6 +12,7 @@ import AdminUsersPage from "./pages/AdminPortal/AdminUsersPage";
 import AdminReportsPage from "./pages/AdminPortal/AdminReportsPage";
 import ProfilePage from "./pages/ProfilePage";
 import AdminDashboard from "./pages/AdminDashboard";
+import Unauthorized from "./pages/Unauthorized";
 
 function App() {
 
@@ -19,31 +20,32 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         {/* public routes */}
-        <Route path="/" element={<StartPage/>} />
-        <Route path="/login" element={<Login/>} />
+        <Route path="/" element={<StartPage />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/unauthorized" element={<p>Unauthorized</p>}/>
+        <Route path="/unauthorized" element={<Unauthorized/>} />
 
-
-        <Route element={<RequiredAuth allowedRole="user"/>}>
-          <Route path="/home" element={<HomePage/>}/>
-          <Route path="/chats" element={<ChatRoom/>}/>
-          <Route path="/profile" element={<ProfilePage/>}/>
+        {/* user routes */}
+        <Route element={<RequiredAuth allowedRole="user" />}>
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/chats" element={<ChatRoom />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Route>
 
-    <Route element={<RequiredAuth allowedRole="admin" />}>
-      <Route
-        path="/admin-dashboard"
-        element={<AdminDashboard />}
-      >
-        <Route index element={<AdminUsersPage />} />
-        <Route path="categories" element={<AdminCategoriesPage />} />
-        <Route path="advertisements" element={<AdminAdvertisementsPage />} />
-        <Route path="reports" element={<AdminReportsPage/>} />
+        {/* admin routes */}
+        <Route element={<RequiredAuth allowedRole="admin" />}>
+          <Route
+            path="/admin-dashboard"
+            element={<AdminDashboard />}
+          >
+            <Route index element={<AdminUsersPage />} />
+            <Route path="categories" element={<AdminCategoriesPage />} />
+            <Route path="advertisements" element={<AdminAdvertisementsPage />} />
+            <Route path="reports" element={<AdminReportsPage />} />
+          </Route>
+        </Route>
       </Route>
-    </Route>
-  </Route>
-</Routes>
+    </Routes>
 
   );
 }
