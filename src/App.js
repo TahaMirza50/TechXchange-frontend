@@ -7,13 +7,15 @@ import Layout from "./components/Layout";
 import RequiredAuth from "./components/RequireAuth";
 import ChatRoom from "./pages/ChatRoom";
 import AdminHomePage from "./pages/AdminPortal/AdminHomePage"
+import AdminCategoriesPage from "./pages/AdminPortal/AdminCategoriesPage";
+import AdminAdvertisementsPage from "./pages/AdminPortal/AdminAdvertisementsPage";
 import AdminUsersPage from "./pages/AdminPortal/AdminUsersPage";
+import AdminReportsPage from "./pages/AdminPortal/AdminReportsPage";
 
 function App() {
 
   return (
     <Routes>
-
       <Route path="/" element={<Layout />}>
         {/* public routes */}
         <Route path="/" element={<StartPage/>} />
@@ -28,12 +30,20 @@ function App() {
           <Route path="/profile" element={<p>profile</p>}/>
         </Route>
 
-        <Route element={<RequiredAuth allowedRole="admin"/>}>
-          <Route path="/admin-dashboard" element={<AdminHomePage/>}/>
-        </Route>
-
+    <Route element={<RequiredAuth allowedRole="admin" />}>
+      <Route
+        path="/admin-dashboard"
+        element={<AdminDashboard />}
+      >
+        <Route index element={<AdminUsersPage />} />
+        <Route path="categories" element={<AdminCategoriesPage />} />
+        <Route path="advertisements" element={<AdminAdvertisementsPage />} />
+        <Route path="reports" element={<AdminReportsPage/>} />
       </Route>
-    </Routes>
+    </Route>
+  </Route>
+</Routes>
+
   );
 }
 
