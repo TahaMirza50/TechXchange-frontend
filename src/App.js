@@ -10,6 +10,7 @@ import RequiredAuth from "./components/RequireAuth";
 import AdminCategoriesPage from "./pages/AdminPortal/AdminCategoriesPage";
 import AdminAdvertisementsPage from "./pages/AdminPortal/AdminAdvertisementsPage";
 import AdminUsersPage from "./pages/AdminPortal/AdminUsersPage";
+import AdminReportsPage from "./pages/AdminPortal/AdminReportsPage";
 
 function App() {
 
@@ -94,6 +95,7 @@ function App() {
         <Route index element={<AdminUsersPage />} />
         <Route path="categories" element={<AdminCategoriesPage />} />
         <Route path="advertisements" element={<AdminAdvertisementsPage />} />
+        <Route path="reports" element={<AdminReportsPage/>} />
       </Route>
     </Route>
   </Route>
