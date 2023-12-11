@@ -5,12 +5,13 @@ import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import ModalAlerts from "../components/ModalAlerts";
 import useAuth from "../hooks/useAuth";
+import {useSelector} from 'react-redux'
 
 const Login = ({ onLogin }) => {
     const { setAuth } = useAuth();
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
-
+    
     const [isPending, setIsPending] = useState(false);
 
     const [openModal, setOpenModal] = useState(false);

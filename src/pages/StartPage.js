@@ -1,16 +1,16 @@
 import { Carousel } from 'flowbite-react';
 import Navbar from "../components/Navbar";
 import img1 from "../assets/images/gaming-pc.png";
-import img2 from "../assets/images/apple-iphone.png"
+import img2 from "../assets/images/phone.png"
 import img3 from "../assets/images/ps5.png"
 import img4 from "../assets/images/GPU.png"
 
 const StartPage = () => {
     return (
-        <div className="h-screen bg-white">
+        <div className="h-screen bg-white flex flex-col">
             <Navbar />
             <p className='text-center pt-5 text-3xl text-black'>"Unlocking the value in Used Tech:Where Old Becomes Gold!"</p>
-            <div className="h-5/6">
+            <div className="h-full">
                 <Carousel
                     leftControl={<button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
                         <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-800/30 group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-gray-800/70 group-focus:outline-none">
@@ -35,12 +35,12 @@ const StartPage = () => {
                             <p className='text-justify'>"Embark on a new journey with our platform, where you not only sell your old gaming PC but also pass on the legacy of epic battles and countless victories. Transform your gaming setup and let someone else embark on their own gaming adventures with the perfect rig from your past. Join the community of gamers, and let the pixels of nostalgia meet the excitement of new beginnings."</p>
                         </div>
                     </div>
-                    <div className="flex items-center justify-center w-3/4 h-5/6 columns-2 pt-10">
-                        <img className='h-full w-2/5' src={img2} alt="..." />
+                    <div className="flex items-center justify-center w-3/4 h-5/6 columns-2 gap-20 pt-10">
                         <div className='w-2/5'>
-                            <h1 className='font-bold text-6xl py-5'>Apple IPhones</h1>
-                            <p className='text-justify'>"Experience the epitome of sleek design and cutting-edge technology with iPhones. From vibrant displays to seamless connectivity, these devices redefine modern communication. With powerful cameras and top-notch performance, iPhones offer a premium mobile experience that effortlessly integrates into your daily life."</p>
+                            <h1 className='font-bold text-6xl py-5'>Smartphones</h1>
+                            <p className='text-justify'>"Smartphones, essential in today's world, seamlessly blend technology and lifestyle. These pocket-sized marvels offer instant connectivity, limitless information, and a gateway to innovation. With sleek designs, powerful processors, and versatile features, smartphones empower users to capture moments, explore the world, and stay connected—redefining convenience and shaping the way we work, communicate, and experience life."</p>
                         </div>
+                        <img className='h-full w-2/5' src={img2} alt="..." />
                     </div>
                     <div className="flex items-center justify-center w-3/4 h-5/6 columns-2 gap-5">
                         <div className='w-2/5'>
