@@ -86,13 +86,13 @@ const HomePageNavbar = () => {
                 <div className="flex flex-row items-center">
                     <ul className="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm">
                         <li>
-                            <Link to="#" className="text-white dark:text-white hover:text-black" aria-current="page">My Adverts</Link>
+                            <Link to="#" className="text-white dark:text-white hover:text-sky-500" aria-current="page">My Adverts</Link>
                         </li>
                         <li>
-                            <Link to="/chats" className="text-white dark:text-white hover:text-black">My Chats</Link>
+                            <Link to="/chats" className="text-white dark:text-white hover:text-sky-500">My Chats</Link>
                         </li>
                         <li>
-                            <a href="#" className="text-white dark:text-white hover:text-black">My Wishlist</a>
+                            <Link to="#" className="text-white dark:text-white hover:text-sky-500">My Wishlist</Link>
                         </li>
                     </ul>
                 </div>
