@@ -76,13 +76,13 @@ const HomePage = () => {
         <div>
             <HomePageNavbar/>
             <div className="flex flex-col items-center mx-28">
-                <section class="bg-gradient-to-r from-sky-500 to-blue-900 my-10 ">
-                    <div class="grid max-w-screen-xl px-16 pt-12 mx-auto lg:gap-8 xl:gap-2 lg:pt-12 lg:grid-cols-12">
-                        <div class="mr-auto place-self-center lg:col-span-7">
-                            <h1 class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl text-black dark:text-white">Buy and Sell with Ease and Trust</h1>
-                            <p class="max-w-2xl mb-6 font-light text-black lg:mb-8 md:text-lg lg:text-xl dark:text-white">Streamline your electronics selling experience effortlessly on our platform. Benefit from simplicity and premium service as you optimize your device's value. With swift listings and interactive chats, our platform guarantees a hassle-free selling journey—no transactions involved. Join now and effortlessly turn your unused electronics into cash!</p>
+                <section className="bg-gradient-to-r from-sky-500 to-blue-900 my-10 ">
+                    <div className="grid max-w-screen-xl px-16 pt-12 mx-auto lg:gap-8 xl:gap-2 lg:pt-12 lg:grid-cols-12">
+                        <div className="mr-auto place-self-center lg:col-span-7">
+                            <h1 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl text-black dark:text-white">Buy and Sell with Ease and Trust</h1>
+                            <p className="max-w-2xl mb-6 font-light text-black lg:mb-8 md:text-lg lg:text-xl dark:text-white">Streamline your electronics selling experience effortlessly on our platform. Benefit from simplicity and premium service as you optimize your device's value. With swift listings and interactive chats, our platform guarantees a hassle-free selling journey—no transactions involved. Join now and effortlessly turn your unused electronics into cash!</p>
                         </div>
-                        <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
+                        <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
                             <img src={img} alt="mockup" />
                         </div>
                     </div>

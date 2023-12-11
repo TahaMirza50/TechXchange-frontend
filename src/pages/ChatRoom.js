@@ -4,7 +4,6 @@ import HomePageNavbar from "../components/HomePageNavbar";
 import useApiPrivate from "../hooks/useAPIPrivate";
 import { useSelector } from "react-redux";
 import img from "../assets/images/chats.png"
-import { useQuery } from "react-query";
 
 const ChatRoom = () => {
     const [chats, setChats] = useState([]);
@@ -34,11 +33,35 @@ const ChatRoom = () => {
         }
 
         getChats()
+
         return () => {
             isMounted = false;
             controller.abort();
         };
     }, [apiPrivate, deleteChat]);
+
+    const handleReloadChat = async () => {
+        try {
+            const response2 = await apiPrivate.get(`chatroom/advert/${visibleChat.advertId}`);
+            setVisibleChat(response2.data);
+            setMessage("");
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            if (chatView) {
+                handleReloadChat();
+                console.log("called");
+            }
+        }, 10000);
+
+        return () => {
+            clearInterval(intervalId);
+        }
+    },[chatView,visibleChat])
 
     const handleChatClick = (chat) => {
         setVisibleChat(chat);
@@ -54,28 +77,28 @@ const ChatRoom = () => {
 
         if (user.firstName === msg.userID.firstName && user.lastName === msg.userID.lastName) {
             return (
-                <div class="flex place-items-start gap-2.5 my-5">
-                    <div class="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-green-200 rounded-e-xl rounded-es-xl dark:bg-gray-700">
-                        <div class="flex items-center space-x-2 rtl:space-x-reverse">
-                            <span class="text-sm font-semibold text-gray-900 dark:text-white">{msg.userID.firstName + " " + msg.userID.lastName}</span>
-                            <span class="text-sm font-normal text-gray-500 dark:text-gray-400">{formattedDate + " " + formattedTime}</span>
+                <div key={msg._id} className="flex place-items-start gap-2.5 my-5">
+                    <div className="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-green-200 rounded-e-xl rounded-es-xl dark:bg-gray-700">
+                        <div className="flex items-center space-x-2 rtl:space-x-reverse">
+                            <span className="text-sm font-semibold text-gray-900 dark:text-white">You</span>
+                            <span className="text-sm font-normal text-gray-500 dark:text-gray-400">{formattedDate + " " + formattedTime}</span>
                         </div>
-                        <p class="text-sm font-normal py-2.5 text-gray-900 dark:text-white">{msg.message}</p>
+                        <p className="text-sm font-normal py-2.5 text-gray-900 dark:text-white">{msg.message}</p>
                     </div>
-                    <svg onClick={() => handleDeleteMessage(msg)} class="w-4 h-4 text-gray-800 dark:text-white hover:text-red-700" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h16M7 8v8m4-8v8M7 1h4a1 1 0 0 1 1 1v3H6V2a1 1 0 0 1 1-1ZM3 5h12v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5Z" />
+                    <svg onClick={() => handleDeleteMessage(msg)} className="w-4 h-4 text-gray-800 dark:text-white hover:text-red-700" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h16M7 8v8m4-8v8M7 1h4a1 1 0 0 1 1 1v3H6V2a1 1 0 0 1 1-1ZM3 5h12v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5Z" />
                     </svg>
                 </div>
             )
         } else {
             return (
-                <div class="flex place-items-start justify-end gap-2.5 my-5">
-                    <div class="flex flex-col w-full max-w-[320px] p-4 border-gray-200 bg-red-200 rounded-s-xl rounded-ee-xl dark:bg-gray-700">
-                        <div class="flex items-center space-x-2 rtl:space-x-reverse">
-                            <span class="text-sm font-semibold text-gray-900 dark:text-white">{msg.userID.firstName + " " + msg.userID.lastName}</span>
-                            <span class="text-sm font-normal text-gray-500 dark:text-gray-400">{formattedDate + " " + formattedTime}</span>
+                <div key={msg._id} className="flex place-items-start justify-end gap-2.5 my-5">
+                    <div className="flex flex-col w-full max-w-[320px] p-4 border-gray-200 bg-red-200 rounded-s-xl rounded-ee-xl dark:bg-gray-700">
+                        <div className="flex items-center space-x-2 rtl:space-x-reverse">
+                            <span className="text-sm font-semibold text-gray-900 dark:text-white">{msg.userID.firstName + " " + msg.userID.lastName}</span>
+                            <span className="text-sm font-normal text-gray-500 dark:text-gray-400">{formattedDate + " " + formattedTime}</span>
                         </div>
-                        <p class="text-sm font-normal py-2.5 text-gray-900 dark:text-white">{msg.message}</p>
+                        <p className="text-sm font-normal py-2.5 text-gray-900 dark:text-white">{msg.message}</p>
                     </div>
                 </div>
             )
@@ -85,13 +108,14 @@ const ChatRoom = () => {
     const handleSendMessage = async (e) => {
         e.preventDefault();
         try {
-            const response1 = await apiPrivate.patch("chatroom/send-message", {
+            await apiPrivate.patch("chatroom/send-message", {
                 chatID: visibleChat._id,
                 message
             });
-            const response2 = await apiPrivate.get(`chatroom/advert/${response1.data.advertId}`);
-            setVisibleChat(response2.data);
-            setMessage("");
+            // const response2 = await apiPrivate.get(`chatroom/advert/${response1.data.advertId}`);
+            // setVisibleChat(response2.data);
+            // setMessage("");
+            await handleReloadChat();
         } catch (error) {
             console.log(error);
         }
@@ -100,13 +124,14 @@ const ChatRoom = () => {
 
     const handleDeleteMessage = async (msg) => {
         try {
-            await apiPrivate.patch('chatroom/delete-message',{
+            await apiPrivate.patch('chatroom/delete-message', {
                 messageID: msg._id,
-                chatID:visibleChat._id
+                chatID: visibleChat._id
             });
-            const response2 = await apiPrivate.get(`chatroom/advert/${visibleChat.advertId}`);
-            setVisibleChat(response2.data);
-            setMessage("");
+            // const response2 = await apiPrivate.get(`chatroom/advert/${visibleChat.advertId}`);
+            // setVisibleChat(response2.data);
+            // setMessage("");
+            await handleReloadChat();
         } catch (error) {
             console.log(error);
         }
@@ -125,16 +150,6 @@ const ChatRoom = () => {
         }
     }
 
-    const handleReloadChat = async () => {
-        try {
-            const response2 = await apiPrivate.get(`chatroom/advert/${visibleChat.advertId}`);
-            setVisibleChat(response2.data);
-            setMessage("");
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
     return (
         <div>
             <HomePageNavbar />
@@ -142,12 +157,12 @@ const ChatRoom = () => {
                 <div className="h-full w-full flex flex-col gap-5">
                     <h4 className="text-2xl font-extrabold dark:text-white py-4">Chats</h4>
                     <div className="flex w-full h-96 flex-row gap-5 items-center justify-center">
-                        <ul class="w-1/3 h-full text-sm font-medium overflow-y-auto text-gray-900  dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        <ul className="w-1/3 h-full text-sm font-medium overflow-y-auto text-gray-900  dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                             {
                                 chats.map(chat => (
-                                    <li className={`px-4 mb-5 py-2 gap-5 rounded-2xl w-full h-16 border-black border-2 flex flex-row items-center justify-start ${visibleChat._id === chat._id ? 'bg-sky-500' : 'bg-white'} hover:bg-sky-500 border-b-2 dark:border-gray-600`} onClick={() => handleChatClick(chat)} >
-                                        <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 11 14H9a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 10 19Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                    <li key={chat._id} className={`px-4 mb-5 py-2 gap-5 rounded-2xl w-full h-16 border-black border-2 flex flex-row items-center justify-start ${visibleChat._id === chat._id ? 'bg-sky-500' : 'bg-white'} hover:bg-sky-500 border-b-2 dark:border-gray-600`} onClick={() => handleChatClick(chat)} >
+                                        <svg className="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 11 14H9a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 10 19Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                         </svg>
                                         <p>
                                             {(user.firstName === chat.participants[0].firstName && user.lastName === chat.participants[0].lastName)
@@ -171,11 +186,11 @@ const ChatRoom = () => {
                                         </p>
                                         <div className="flex flex-row gap-3 items-center">
                                             <button className="border-2 hover:bg-sky-700 bg-sky-500 py-1 px-1 rounded-xl border-transparent">Go to ad</button>
-                                            <svg onClick={handleReloadChat} class="w-4 h-4 text-white hover:text-green-700 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+                                            {/* <svg onClick={handleReloadChat} class="w-4 h-4 text-white hover:text-green-700 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
                                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 1v5h-5M2 19v-5h5m10-4a8 8 0 0 1-14.947 3.97M1 10a8 8 0 0 1 14.947-3.97" />
-                                            </svg>
-                                            <svg onClick={handleDeleteChatroom} class="w-4 h-4 dark:text-white hover:text-red-700" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h16M7 8v8m4-8v8M7 1h4a1 1 0 0 1 1 1v3H6V2a1 1 0 0 1 1-1ZM3 5h12v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5Z" />
+                                            </svg> */}
+                                            <svg onClick={handleDeleteChatroom} className="w-4 h-4 dark:text-white hover:text-red-700" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+                                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h16M7 8v8m4-8v8M7 1h4a1 1 0 0 1 1 1v3H6V2a1 1 0 0 1 1-1ZM3 5h12v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5Z" />
                                             </svg>
                                         </div>
                                     </div>
@@ -183,14 +198,14 @@ const ChatRoom = () => {
                                         {[...visibleChat.messages].reverse().map(msg => (handleMessages(msg)))}
                                     </div>
                                     <form onSubmit={handleSendMessage}>
-                                        <label for="chat" class="sr-only">Your message</label>
-                                        <div class="flex items-center px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700">
-                                            <textarea disabled={visibleChat.disabled} value={message} onChange={(e) => setMessage(e.target.value)} id="chat" rows="1" class="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-900 focus:border-blue-900 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Your message..."></textarea>
-                                            <button type="submit" class="inline-flex justify-center p-2 text-blue-900 rounded-full cursor-pointer hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600">
-                                                <svg class="w-5 h-5 rotate-90 rtl:-rotate-90" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                                        <label htmlFor="chat" className="sr-only">Your message</label>
+                                        <div className="flex items-center px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700">
+                                            <textarea disabled={visibleChat.disabled} value={message} onChange={(e) => setMessage(e.target.value)} id="chat" rows="1" className="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-900 focus:border-blue-900 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Your message..."></textarea>
+                                            <button type="submit" className="inline-flex justify-center p-2 text-blue-900 rounded-full cursor-pointer hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600">
+                                                <svg className="w-5 h-5 rotate-90 rtl:-rotate-90" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
                                                     <path d="m17.914 18.594-8-18a1 1 0 0 0-1.828 0l-8 18a1 1 0 0 0 1.157 1.376L8 18.281V9a1 1 0 0 1 2 0v9.281l6.758 1.689a1 1 0 0 0 1.156-1.376Z" />
                                                 </svg>
-                                                <span class="sr-only">Send message</span>
+                                                <span className="sr-only">Send message</span>
                                             </button>
                                         </div>
                                     </form>
