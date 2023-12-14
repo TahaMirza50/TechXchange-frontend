@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Ad Form</title>
+</head>
+<body>
+    <form id="createAdForm" enctype="multipart/form-data" onsubmit="handleSubmit(event)">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required></textarea>
+
+        <label for="location">Location:</label>
+        <input type="'text" id="location" name="location" required>
+
+        <label for="category">Category:</label>
+        <select id="category" name="category" required>
+            <option value="Electronics">Electronics</option>
+            <option value="Fashion & Beauty">Fashion & Beauty</option>
+            <option value="Services">Services</option>
+            <option value="Furniture">Furniture</option>
+            <option value="Books & Stationary">Books & Stationary</option>
+            <option value="Vehicles">Vehicles</option>
+            <option value="Kids">Kids</option>
+        </select>
+
+        <label for="condition">Condition:</label>
+        <select id="condition" name="condition" required>
+            <option value="New">New</option>
+            <option value="Good">Poor</option>
+            <option value="Fair">Poor</option>
+            <option value="Poor">Poor</option>
+        </select>
+
+        <label for="adType">Type:</label>
+        <select id="adType" name="adType" onchange="handleAdTypeChange()" required>
+            <option value="sell">Sell</option>
+            <option value="buy">Buy</option>
+            
+            
+        </select>
+
+        <div id="priceField" style="display: none;">
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price">
+        </div>
+
+        <label for="image">Image:</label>
+        <input type="file" id="image" name="image" accept="image/*" required>
+
+        <button type="submit" onclick="handleSubmit()">Submit</button>
+    </form>
+
+    <script>
+      function handleAdTypeChange() {
+        var adType = document.getElementById('adType').value;
+            var priceField = document.getElementById('priceField');
+
+            if (adType === 'sell') {
+                priceField.style.display = 'block';
+            } else {
+                priceField.style.display = 'none';
+            }
+        
+      }
+
+      async function handleSubmit() {
+          const form = document.getElementById('createAdForm');
+          const formData = new FormData(form);
+
+          try {
+              const response = await fetch(profile.address, {
+                  method: 'POST',
+                  body: formData,
+              });
+
+              if (response.ok) {
+                  const data = await response.json();
+                  alert('Ad created successfully');
+                 
+              } else {
+                  alert('Failed to create ad');
+              }
+          } catch (error) {
+              console.error('Error:', error);
+              alert('Failed to create ad');
+          }
+      }
+  </script>
+</body>
+</html>
