@@ -6,6 +6,7 @@ const AdminReportsPage = () => {
     const [reports, setReports] = useState([{}]);
     const [selectedReport, setSelectedReport] = useState(null);
     const [selectedReportAdvert, setSelectedReportAdvert] = useState(null);
+    
     const apiPrivate = useApiPrivate();
 
     const getReports = async () => {
@@ -24,6 +25,8 @@ const AdminReportsPage = () => {
         
     }
 
+    
+
     const handleClosePopup = () => {
         setSelectedReport(null);
         setSelectedReportAdvert(null);
@@ -39,6 +42,14 @@ const AdminReportsPage = () => {
         })
         
     }
+    const handleMarkReviewed = async (event, id) => {
+        event.stopPropagation();
+        await apiPrivate.patch("report/admin/update/" + id).then((res) => {
+            if (res.status === 200) {
+                setReports((prevReports) => prevReports.map((report) => report._id === id ? { ...report, inReview: false } : report))
+            }
+        })
+      };
 
     useEffect(() => {
         getReports();
@@ -49,7 +60,7 @@ const AdminReportsPage = () => {
             <h1 className="font-semibold text-3xl mb-4">
                 Advertisement Reports
             </h1>
-            {selectedReport && (<ReportDetailsPopup report={selectedReport} advert={selectedReportAdvert} closePopup={handleClosePopup}/>)}
+            {selectedReport && (<ReportDetailsPopup report={selectedReport} advert={selectedReportAdvert} closePopup={handleClosePopup} apiPrivate={apiPrivate}/>)}
             <ul>
                 {
                     reports.length === 0 
@@ -65,6 +76,20 @@ const AdminReportsPage = () => {
                             <p className="text-sm mt-2">
                                 <span className="font-bold">Title:</span> {report.advertId?.title}
                             </p>
+                            <p className="text-sm mt-2">
+                                {report.inReview === true
+                                ? (<span className="font-bold text-red-500">In Review</span> )
+                                : (<span className="font-bold text-green-500">Reviewed</span> )
+                                }
+                            </p>
+                            {
+                                report.inReview && (
+                                <button onClick={(event) => handleMarkReviewed(event, report._id)} className="mt-5 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                                    Mark Reveiwed
+                                </button>
+                                )
+                            }
+                            
                         </li>
                     )))
                 }

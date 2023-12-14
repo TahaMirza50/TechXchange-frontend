@@ -1,4 +1,23 @@
-const ReportDetailsPopup = ({ report, advert, closePopup }) => {
+import { useEffect, useState} from 'react';
+
+const ReportDetailsPopup = ({ report, advert, closePopup, apiPrivate}) => {
+  
+  const [advertDeleted, setadvertDeleted] = useState(advert.delete);
+
+  const deleteAd = async () => {
+    try {
+        await apiPrivate.delete("advert/admin/delete/" + advert._id).then((res) => {
+          if (res.status === 200) {
+            setadvertDeleted(true);
+          }
+        })
+        
+    }
+    catch (error) {
+        console.log(error)
+    }
+  }
+
     return (
       <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-opacity-50 bg-gray-900">
         <div className="bg-white p-6 rounded-md shadow-lg max-w-md">
@@ -61,12 +80,21 @@ const ReportDetailsPopup = ({ report, advert, closePopup }) => {
   
           {/* Delete button */}
           <span>
-            <button
-              onClick={closePopup}
+            {
+              advertDeleted === false
+              ? (
+                <button
+              onClick={() => deleteAd()}
               className="mt-6 ml-5 p-2 bg-red-500 text-white rounded cursor-pointer hover:bg-red-600 transition duration-300"
             >
               Delete
             </button>
+              )
+              : (
+                 <span className="font-bold text-red-500 ml-7">Advertisement Deleted</span> 
+              )
+            }
+            
           </span>
           </div>
         </div>

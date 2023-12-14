@@ -6,11 +6,11 @@ import Register from "./pages/Register";
 import Layout from "./components/Layout";
 import RequiredAuth from "./components/RequireAuth";
 import ChatRoom from "./pages/ChatRoom";
-import AdminHomePage from "./pages/AdminPortal/AdminHomePage"
 import AdminCategoriesPage from "./pages/AdminPortal/AdminCategoriesPage";
 import AdminAdvertisementsPage from "./pages/AdminPortal/AdminAdvertisementsPage";
 import AdminUsersPage from "./pages/AdminPortal/AdminUsersPage";
 import AdminReportsPage from "./pages/AdminPortal/AdminReportsPage";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function App() {
 
@@ -33,7 +33,7 @@ function App() {
     <Route element={<RequiredAuth allowedRole="admin" />}>
       <Route
         path="/admin-dashboard"
-        element={<AdminDashboard />}
+        element={<AdminDashboard/>}
       >
         <Route index element={<AdminUsersPage />} />
         <Route path="categories" element={<AdminCategoriesPage />} />
