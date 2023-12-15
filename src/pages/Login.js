@@ -5,7 +5,6 @@ import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import ModalAlerts from "../components/ModalAlerts";
 import useAuth from "../hooks/useAuth";
-import {useSelector} from 'react-redux'
 
 const Login = ({ onLogin }) => {
     const { setAuth } = useAuth();
@@ -33,9 +32,7 @@ const Login = ({ onLogin }) => {
             }).then((res) => {
                 if (res.status === 200) {
                     const {accessToken} = res.data;
-
                     localStorage.setItem("accessToken", accessToken);
-
 
                     const decodedToken = jwtDecode(accessToken);
                     const role = decodedToken.role;
@@ -64,7 +61,7 @@ const Login = ({ onLogin }) => {
     }
 
     return (
-        <section class="bg-gray-50 dark:bg-gray-900">
+        <section class="bg-gray-200 dark:bg-gray-900">
             <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                 <a href="/" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
                     <img class="w-8 h-8 mr-2" src={logo} alt="logo" />
