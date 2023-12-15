@@ -7,11 +7,12 @@ import CategoryCard from "../components/CategoryCard";
 import Footer from "../components/Footer";
 import { useDispatch } from "react-redux";
 import { profile } from "../features/userProfile";
+import { category } from "../features/categories";
 
 const HomePage = () => {
     const [categories, setCategories] = useState([]);
-    const [categoryOne,setCategoryOne] = useState();
-    const [categoryTwo,setCategoryTwo] = useState();
+    const [categoryOne, setCategoryOne] = useState();
+    const [categoryTwo, setCategoryTwo] = useState();
 
     const dispatch = useDispatch();
 
@@ -27,7 +28,20 @@ const HomePage = () => {
                 const response = await apiPrivate.get('profile/get');
                 if (isMounted) {
                     console.log(response.data);
-                    dispatch(profile({firstName: response.data.firstName,lastName:response.data.lastName,profileID:response.data._id, notificationsID:response.data.notificationsID}));
+                    dispatch(profile(
+                        { 
+                            firstName: response.data.firstName, 
+                            lastName: response.data.lastName, 
+                            profileID: response.data._id, 
+                            notificationsID: response.data.notificationsID,
+                            address: response.data.address,
+                            contact: response.data.contact,
+                            CNIC: response.data.CNIC,
+                            rating: response.data.rating,
+                            numberOfReviews: response.data.numberOfReviews,
+                            socialMediaLinks: response.data.socialMediaLinks
+                        }
+                    ));
                 }
             } catch (error) {
                 console.error(error);
@@ -39,8 +53,9 @@ const HomePage = () => {
                 const response = await apiPrivate.get('category');
                 if (isMounted && response.status === 200) {
                     setCategories(response.data);
-                    setCategoryOne(response.data[0].name)
-                    setCategoryTwo(response.data[3].name)
+                    setCategoryOne(response.data[0].name);
+                    setCategoryTwo(response.data[3].name);
+                    dispatch(category(response.data));
                 }
             } catch (error) {
                 console.error(error);
@@ -54,7 +69,7 @@ const HomePage = () => {
             isMounted = false;
             controller.abort();
         };
-    }, [apiPrivate,dispatch]);
+    }, [apiPrivate, dispatch]);
 
     const colors = [
         'bg-blue-900',
@@ -65,7 +80,7 @@ const HomePage = () => {
 
     return (
         <div>
-            <HomePageNavbar/>
+            <HomePageNavbar />
             <div className="flex flex-col items-center mx-28">
                 <section className="bg-gradient-to-r from-sky-500 to-blue-900 my-10 w-full">
                     <div className="grid max-w-screen-xl px-16 pt-12 mx-auto lg:gap-8 xl:gap-2 lg:pt-12 lg:grid-cols-12">
@@ -79,12 +94,12 @@ const HomePage = () => {
                     </div>
                 </section>
                 <section className="my-10">
-                <h4 className="text-center text-2xl font-extrabold dark:text-white pb-10">Shop deals by category</h4>
-                <div className="w-full flex flex-wrap justify-center gap-10 ">
-                    {categories.map((category, index) => (
-                        <CategoryCard key={category._id} category={category} backgroundColor={colors[index % colors.length]} />
-                    ))}
-                </div>
+                    <h4 className="text-center text-2xl font-extrabold dark:text-white pb-10">Shop deals by category</h4>
+                    <div className="w-full flex flex-wrap justify-center gap-10 ">
+                        {categories.map((category, index) => (
+                            <CategoryCard key={category._id} category={category} backgroundColor={colors[index % colors.length]} />
+                        ))}
+                    </div>
                 </section>
                 <section className="w-full my-10 text-left">
                     <h4 className="text-2xl font-extrabold dark:text-white pb-10">Latest {categoryOne}</h4>
@@ -95,7 +110,7 @@ const HomePage = () => {
             </div>
 
             <button onClick={() => navigate("/admin-dashboard")}>go to admin</button>
-            <Footer/>
+            <Footer />
         </div>
     );
 }

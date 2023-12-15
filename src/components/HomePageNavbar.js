@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import logo from '../assets/images/logo.png'
 import { useSelector } from 'react-redux';
 
@@ -20,7 +20,7 @@ const HomePageNavbar = () => {
                 <div className="hidden w-full md:block md:w-auto" id="navbar-default">
                     <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-4 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-sky-500 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                         <li>
-                            <button style={{
+                            <Link to="/home/create-ad" style={{
                                 borderTopColor: 'red',
                                 borderRightColor: 'yellow',
                                 borderBottomColor: 'blue',
@@ -30,7 +30,7 @@ const HomePageNavbar = () => {
                                 <svg className="w-2 h-2 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
                                 </svg>
-                            </button>
+                            </Link>
                         </li>
                         <div className="flex items-center">
                             <li>

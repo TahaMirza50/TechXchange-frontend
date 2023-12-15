@@ -13,6 +13,7 @@ import AdminReportsPage from "./pages/AdminPortal/AdminReportsPage";
 import ProfilePage from "./pages/ProfilePage";
 import AdminDashboard from "./pages/AdminDashboard";
 import Unauthorized from "./pages/Unauthorized";
+import CreateAd from "./pages/CreateAd";
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/chats" element={<ChatRoom />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/home/create-ad" element={<CreateAd/>}/>
         </Route>
 
         {/* admin routes */}

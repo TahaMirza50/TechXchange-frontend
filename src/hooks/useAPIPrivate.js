@@ -27,6 +27,7 @@ const useApiPrivate = () => {
                 if(error?.response.status === 401 && !prevRequest?.sent){
                     prevRequest.sent = true;
                     const newAccessToken = await refresh();
+                    // console.log("hello")
                     prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
                     return apiPrivate(prevRequest);
                 }
