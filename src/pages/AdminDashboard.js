@@ -16,15 +16,18 @@ const AdminDashboard = () => {
     }
 
     return ( 
-        <div className="h-screen bg-white ">
-        <div className='flex flex-col space-y-16'>
-            <LoggedInNavbar name="Admin" profileImage={adminProfileImage}/>
-            <SideBar handleLogOut={handleLogOut}/>
-        </div>
+        <div className="h-screen w-screen bg-white ">
+            <div className='flex-col space-y-16'>
+                <LoggedInNavbar name="Admin" profileImage={adminProfileImage}/>
+                <SideBar handleLogOut={handleLogOut} />
+            </div>
 
-        <Outlet/>
+            <div className="ml-60 mr-60">
+                <Outlet />
+            </div>
+            
         
-    </div>
+        </div>
      );
 }
  

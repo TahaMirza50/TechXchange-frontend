@@ -78,7 +78,7 @@ const AdminCategoriesPage = () => {
               {categories.map((category, index) => (
                 <li
                   key={index}
-                  className="flex items-center font-bold mb-3 p-2 border rounded hover:bg-gray-100"
+                  className="block font-bold p-2 border mb-3 rounded bg-gray-100 hover:bg-gray-200"
                 >
                   {category.name}
                 </li>
