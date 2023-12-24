@@ -11,7 +11,7 @@ const LoggedInNavbar = (props) => {
                     <img src={logo} className="h-8" alt="Flowbite Logo" />
                     <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">TechXchange</span>
                 </div>
-                <div className="hidden w-full md:block md:w-auto" id="navbar-default">
+                <div className="w-full md:block md:w-auto" id="navbar-default">
                     <ul className="font-medium items-center flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-1 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-sky-500 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                         <li>
                             {name}

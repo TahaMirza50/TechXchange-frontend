@@ -100,9 +100,9 @@ const AdminUsersPage = () => {
             ? (<p>No Users</p>) 
             : (<ul>
               {
-              users.map((user) => (
+              users.map((user, index) => (
                 <li
-                  key={user._id}
+                  key={index}
                   className="flex cursor-pointer items-center mb-2 p-2 border rounded hover:bg-gray-100"
                   //onClick={() => handleUserClick(user)}
                 >

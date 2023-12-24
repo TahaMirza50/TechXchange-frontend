@@ -10,10 +10,12 @@ import AdminCategoriesPage from "./pages/AdminPortal/AdminCategoriesPage";
 import AdminAdvertisementsPage from "./pages/AdminPortal/AdminAdvertisementsPage";
 import AdminUsersPage from "./pages/AdminPortal/AdminUsersPage";
 import AdminReportsPage from "./pages/AdminPortal/AdminReportsPage";
+
 import ProfilePage from "./pages/ProfilePage";
 import AdminDashboard from "./pages/AdminDashboard";
 import Unauthorized from "./pages/Unauthorized";
 import CreateAd from "./pages/CreateAd";
+
 
 function App() {
 
@@ -34,6 +36,7 @@ function App() {
           <Route path="/home/create-ad" element={<CreateAd/>}/>
         </Route>
 
+
         {/* admin routes */}
         <Route element={<RequiredAuth allowedRole="admin" />}>
           <Route
@@ -46,7 +49,7 @@ function App() {
             <Route path="reports" element={<AdminReportsPage />} />
           </Route>
         </Route>
-      </Route>
+     </Route>
     </Routes>
 
   );
