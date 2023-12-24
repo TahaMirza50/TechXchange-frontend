@@ -1,12 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import Cookies from "universal-cookie";
 import {Outlet} from "react-router-dom"
 import LoggedInNavbar from '../components/LoggedInNavbar'
 import SideBar from '../components/AdminComponents/SideBar'
 import adminProfileImage from '../assets/images/adminProfileimage.png'
 
 const AdminDashboard = () => {
-    const cookies = new Cookies();
     const navigate = useNavigate();
 
 

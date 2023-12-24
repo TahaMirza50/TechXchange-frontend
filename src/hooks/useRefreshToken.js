@@ -11,6 +11,7 @@ const useRefreshToken = () => {
                 withCredentials: true
             }
         )
+        localStorage.setItem("accessToken", response.data.accessToken);
         setAuth(prev => {
             return {...prev,accessToken:response.data.accessToken}
         });
