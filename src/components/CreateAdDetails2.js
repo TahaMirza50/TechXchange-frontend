@@ -1,6 +1,6 @@
 import { Carousel } from "flowbite-react";
 
-const CreateAdDetails2 = ({ values, prevStep, onImageChange, handleSubmit }) => {
+const CreateAdDetails2 = ({ values, prevStep, onImageChange, handleSubmit, confirm }) => {
 
     const Previous = e => {
         e.preventDefault();
@@ -15,7 +15,7 @@ const CreateAdDetails2 = ({ values, prevStep, onImageChange, handleSubmit }) => 
                 </h1>
                 <p className="text-sm font-medium text-gray-900 dark:text-white">{`< 2 / 2 >`}</p>
             </div>
-            <form onSubmit={handleSubmit} class="space-y-4 md:space-y-6 flex-grow justify-between flex flex-col" action="#">
+            <form onSubmit={handleSubmit} encType="multipart/form-data" class="space-y-4 md:space-y-6 flex-grow justify-between flex flex-col" action="#">
                 <div className="grid grid-cols-2 gap-4">
                     <div className="flex flex-col gap-4">
                         <div className="w-3/4">
@@ -48,15 +48,15 @@ const CreateAdDetails2 = ({ values, prevStep, onImageChange, handleSubmit }) => 
                                 {values.imageThreeUpload
                                     ? <img src={URL.createObjectURL(values.imageThree)} className="max-w-fit max-h-full" alt="..." />
                                     : <img src="https://flowbite.com/docs/images/carousel/carousel-1.svg" alt="..." />
-                                }                            
+                                }
                             </Carousel>
                         </div>
                     </div>
                 </div>
                 <div className="flex flex-row justify-end gap-5">
-                    <button type="button" onClick={Previous} class="w-1/5 h-12 text-white bg-sky-500 hover:bg-sky-700 focus:ring-2 focus:outline-none focus:ring-black font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Previous</button>
-
-                    <button type="submit" class="w-1/5 h-12 text-white bg-blue-900 hover:bg-black focus:ring-2 focus:outline-none focus:ring-black font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Confirm</button>
+                    {confirm && <p>Uploading advert.</p>}
+                    <button disabled={confirm} type="submit" class="w-1/5 h-12 text-white bg-blue-900 hover:bg-green-700 focus:ring-2 focus:outline-none focus:ring-black font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Confirm</button>
+                    <button disabled={confirm} type="button" onClick={Previous} class="w-1/5 h-12 text-white bg-sky-500 hover:bg-sky-700 focus:ring-2 focus:outline-none focus:ring-black font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Previous</button>
                 </div>
                 {
                     /* {openModal && <ModalAlerts heading={heading} message={message} onClose={() => { setOpenModal(false) }} />}

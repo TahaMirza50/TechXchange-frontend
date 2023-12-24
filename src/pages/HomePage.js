@@ -72,7 +72,7 @@ const HomePage = () => {
     }, [apiPrivate, dispatch]);
 
     const colors = [
-        'bg-blue-900',
+        'bg-blue-700',
         'bg-green-700',
         'bg-yellow-700',
         'bg-red-700',
