@@ -1,14 +1,50 @@
 import { Link, Navigate } from 'react-router-dom';
 import logo from '../assets/images/logo.png'
 import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import useApiPrivate from '../hooks/useAPIPrivate';
+import { Dropdown } from 'flowbite-react';
+import NotificationCard from './NotificationCard';
 
 const HomePageNavbar = () => {
 
+    const [notBox, setNotBox] = useState(null);
+    const apiPrivate = useApiPrivate();
     const user = useSelector((state) => state.userProfile.value);
 
     const handleLogOut = () => {
         localStorage.removeItem('accessToken');
     }
+
+    // const openNotifications = async () => {
+    //     setOpenNotBox(true);
+    //     // try {
+    //     //     const response = await apiPrivate.get('/notifications');
+    //     //     if (response.status === 200) {
+    //     //         setNotBox(response.data)
+    //     //         console.log(response.data)
+    //     //     }
+    //     // } catch (error) {
+    //     //     console.log(error)
+    //     // }
+    // };
+
+    useEffect(() => {
+        const getNotifications = async () => {
+            try {
+                const response = await apiPrivate.get('/notifications');
+                if (response.status === 200) {
+                    setNotBox(response.data)
+                    console.log(response.data)
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        getNotifications();
+
+    }, [apiPrivate])
 
     return (<div>
         <nav className=" border-gray-200 bg-sky-500 dark:bg-gray-900">
@@ -57,15 +93,25 @@ const HomePageNavbar = () => {
                             </li>
                         </div>
                         <div className='flex items-center'>
-                            <button className="notification-btn">
+                            {/* <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" type="button" className="notification-btn" onClick={() => setOpenNotBox(false)}>
                                 <svg className="w-5 h-5 text-gray-800 dark:text-white hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 21">
                                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 3.464V1.1m0 2.365a5.338 5.338 0 0 1 5.133 5.368v1.8c0 2.386 1.867 2.982 1.867 4.175C15 15.4 15 16 14.462 16H1.538C1 16 1 15.4 1 14.807c0-1.193 1.867-1.789 1.867-4.175v-1.8A5.338 5.338 0 0 1 8 3.464ZM4.54 16a3.48 3.48 0 0 0 6.92 0H4.54Z" />
                                 </svg>
-                            </button>
+                            </button> */}
+                            <Dropdown label="" className="w-1/4 h-2/3 overflow-auto" dismissOnClick={false}
+                                renderTrigger={() =>
+                                    <svg className="w-5 h-5 text-gray-800 dark:text-white hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 21">
+                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 3.464V1.1m0 2.365a5.338 5.338 0 0 1 5.133 5.368v1.8c0 2.386 1.867 2.982 1.867 4.175C15 15.4 15 16 14.462 16H1.538C1 16 1 15.4 1 14.807c0-1.193 1.867-1.789 1.867-4.175v-1.8A5.338 5.338 0 0 1 8 3.464ZM4.54 16a3.48 3.48 0 0 0 6.92 0H4.54Z" />
+                                    </svg>
+                                }>
+                                {notBox.map((notification) => (
+                                    <NotificationCard notification={notification} />
+                                ))}
+                            </Dropdown>
                         </div>
                     </ul>
                 </div>
-            </div>
+            </div><undefined     />
         </nav>
         <nav className="bg-blue-900 dark:bg-gray-700">
             <div className="flex flex-wrap items-center justify-between mx-28 p-4">
@@ -105,3 +151,4 @@ const HomePageNavbar = () => {
 }
 
 export default HomePageNavbar;
+  
