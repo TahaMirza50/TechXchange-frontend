@@ -48,7 +48,7 @@ const AdminCategoriesPage = () => {
 
       useEffect(() => {
         getCategories()
-      })
+      }, [categories])
     
       return (
         <div className="container mx-auto mt-8 max-w-7xl mx-auto my-5 pl-20 pt-20">
@@ -78,7 +78,7 @@ const AdminCategoriesPage = () => {
               {categories.map((category, index) => (
                 <li
                   key={index}
-                  className="flex items-center font-bold mb-3 p-2 border rounded hover:bg-gray-100"
+                  className="block font-bold p-2 border mb-3 rounded bg-gray-100 hover:bg-gray-200"
                 >
                   {category.name}
                 </li>
