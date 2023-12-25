@@ -108,7 +108,7 @@ const AdminUsersPage = () => {
                 >
                   <img src={profileImage} className="h-8" alt="Profile" />
                   {/* {user.firstName} - Rating: {user.rating} */}
-                  {user._id}
+                  {user.firstName} {user.lastName}
                 </li>
               ))}
             </ul>)
