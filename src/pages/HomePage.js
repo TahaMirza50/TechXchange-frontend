@@ -8,11 +8,14 @@ import Footer from "../components/Footer";
 import { useDispatch } from "react-redux";
 import { profile } from "../features/userProfile";
 import { category } from "../features/categories";
+import AdvertCard from "../components/AdvertCard";
 
 const HomePage = () => {
     const [categories, setCategories] = useState([]);
     const [categoryOne, setCategoryOne] = useState();
     const [categoryTwo, setCategoryTwo] = useState();
+    const [categoryOneAdverts, setCategoryOneAdverts] = useState([]);
+    const [categoryTwoAdverts, setCategoryTwoAdverts] = useState([]);
 
     const dispatch = useDispatch();
 
@@ -29,10 +32,10 @@ const HomePage = () => {
                 if (isMounted) {
                     console.log(response.data);
                     dispatch(profile(
-                        { 
-                            firstName: response.data.firstName, 
-                            lastName: response.data.lastName, 
-                            profileID: response.data._id, 
+                        {
+                            firstName: response.data.firstName,
+                            lastName: response.data.lastName,
+                            profileID: response.data._id,
                             notificationsID: response.data.notificationsID,
                             address: response.data.address,
                             contact: response.data.contact,
@@ -53,8 +56,8 @@ const HomePage = () => {
                 const response = await apiPrivate.get('category');
                 if (isMounted && response.status === 200) {
                     setCategories(response.data);
-                    setCategoryOne(response.data[0].name);
-                    setCategoryTwo(response.data[3].name);
+                    setCategoryOne(response.data[0]);
+                    setCategoryTwo(response.data[3]);
                     dispatch(category(response.data));
                 }
             } catch (error) {
@@ -70,6 +73,27 @@ const HomePage = () => {
             controller.abort();
         };
     }, [apiPrivate, dispatch]);
+
+    useEffect(() => {
+        const getAdverts = async (category) => {
+            try {
+                const response = await apiPrivate.get(`/advert/get/category/${category._id}`);
+                if (response.status === 200) {
+                    console.log(response.data);
+                    if (category.name === categoryOne.name)
+                        setCategoryOneAdverts(response.data);
+                    else
+                        setCategoryTwoAdverts(response.data);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        getAdverts(categoryOne);
+        getAdverts(categoryTwo);
+
+    }, [categories, apiPrivate, categoryOne, categoryTwo]);
 
     const colors = [
         'bg-blue-700',
@@ -101,15 +125,27 @@ const HomePage = () => {
                         ))}
                     </div>
                 </section>
-                <section className="w-full my-10 text-left">
-                    <h4 className="text-2xl font-extrabold dark:text-white pb-10">Latest {categoryOne}</h4>
+                <section className="w-full my-10" >
+                    {categoryOne && <h4 className=" text-left text-2xl font-extrabold dark:text-white pb-10">Latest {categoryOne.name}</h4>}
+                    <div className="flex flex-row w-full items-center justify-start overflow-x-auto gap-10">
+                        {categoryOneAdverts && categoryOneAdverts.length > 0 &&
+                            categoryOneAdverts.map((advert) => (
+                                <AdvertCard key={advert._id} advert={advert} />
+                            ))
+                        }
+                    </div>
                 </section>
                 <section className="w-full my-10 text-left">
-                    <h4 className="text-2xl font-extrabold dark:text-white pb-10">Latest {categoryTwo}</h4>
+                    {categoryTwo && <h4 className="text-2xl font-extrabold dark:text-white pb-10">Latest {categoryTwo.name}</h4>}
+                    <div className="flex flex-row w-full items-center justify-start overflow-x-auto gap-10">
+                        {categoryTwoAdverts && categoryTwoAdverts.length > 0 &&
+                            categoryTwoAdverts.map((advert) => (
+                                <AdvertCard key={advert._id} advert={advert} />
+                            ))
+                        }
+                    </div>
                 </section>
             </div>
-
-            <button onClick={() => navigate("/admin-dashboard")}>go to admin</button>
             <Footer />
         </div>
     );
