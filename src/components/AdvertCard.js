@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const AdvertCard = ({ advert }) => {
 
+    const navigate = useNavigate()
     const user = useSelector((state) => state.userProfile.value);
     const [myAd, setMyAd] = useState(false);
 
@@ -18,8 +20,8 @@ const AdvertCard = ({ advert }) => {
     const formattedTime = date.toLocaleTimeString();
 
     return (
-        <div className="border-2 w-60 h-96 m-1 flex flex-col flex-shrink-0 rounded-md items-center hover:shadow-md hover:shadow-gray-400">
-            <img className="h-1/2 m-2 border-b-2 max-w-fit items-center justify-center flex flex-row" src={advert.images[0]} alt="title"></img>
+        <div onClick={() => navigate(`/advert/${advert._id}`)} className="border-2 w-60 h-96 m-1 flex flex-col flex-shrink-0 rounded-md items-center hover:shadow-md hover:shadow-gray-400">
+            <img className="h-1/2 m-2 border-b-2" src={advert.images[0]} alt="title"></img>
             <div className="flex flex-row w-full items-center p-2">
                 <p className="font-bold text-lg w-full text-blue-900">Rs. {advert.price}</p>
                 {myAd || <svg class="w-4 h-4 text-gray-800 dark:text-white hover:text-red-700" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 21 19">
