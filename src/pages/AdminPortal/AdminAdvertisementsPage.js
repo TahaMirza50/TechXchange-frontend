@@ -1,65 +1,79 @@
 import { useEffect, useState } from 'react';
 import useApiPrivate from "../../hooks/useAPIPrivate";
+import AdConfirmationPopup from '../../components/AdminComponents/AdConfirmationPopup';
 
 const AdminAdvertisementsPage = () => {
     const [advertisements, setAdvertisements] = useState([{}]);
-
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [selectedAdId, setSelectedAdId] = useState("");
+    const [buttonType, setButtonType] = useState("");
       const apiPrivate = useApiPrivate();
 
-      const getInReviewAdverts = async () => {
-        try{
-          await apiPrivate.get('advert/admin/get').then(
-            (res) => {
-              setAdvertisements(res.data);
-          }); 
-        }
-        catch(error) {
-          console.error(error)
-        }
-      }
+      
 
       useEffect(() => {
 
+        const getInReviewAdverts = async () => {
+          try{
+            await apiPrivate.get('advert/admin/get').then(
+              (res) => {
+                setAdvertisements(res.data);
+            }); 
+          }
+          catch(error) {
+            console.error(error)
+          }
+        }
+
         getInReviewAdverts();
-      }, [advertisements])
+      }, [advertisements]);
+
+      const handleButtonClicked = (id, buttonType) => {
+        setSelectedAdId(id);
+        setButtonType(buttonType);
+      }
     
-      const handleApprove = async (id) => {
+      const handleApprove = async () => {
         console.log("hello")
         try{
           
-          await apiPrivate.patch('advert/admin/approve/' + id).then(
+          await apiPrivate.patch('advert/admin/approve/' + selectedAdId).then(
             (res) => {
               console.log(res.data);
+              setAdvertisements((prevAds) =>
+          prevAds.filter((ad) =>
+            ad._id !== selectedAdId 
+          )
+        );
+        setSelectedAdId("");
           });
         }
         catch(error) {
           console.log(error);
         }
-        setAdvertisements((prevAds) =>
-          prevAds.filter((ad) =>
-            ad._id !== id 
-          )
-        );
+        
       };
     
-      const handleReject = async (id) => {
+      const handleReject = async () => {
         try{
-          await apiPrivate.patch('advert/admin/reject/' + id).then(
+          await apiPrivate.patch('advert/admin/reject/' + selectedAdId).then(
             (res) => {
               console.log(res.data);
+              setAdvertisements((prevAds) =>
+          prevAds.filter((ad) =>
+            ad._id !== selectedAdId 
+          )
+        );
+        setSelectedAdId("");
           });
         }
         catch(error) {
           console.log(error);
         }
-        setAdvertisements((prevAds) =>
-          prevAds.filter((ad) =>
-            ad._id !== id 
-          )
-        );
+        
       };
 
-      const [selectedImage, setSelectedImage] = useState(null);
+      
 
   const openImageModal = (image) => {
     setSelectedImage(image);
@@ -72,6 +86,12 @@ const AdminAdvertisementsPage = () => {
       return (
         <div className="mx-auto mt-8 max-w-7xl mx-auto my-5 pl-20 pt-20">
       <h1 className="text-3xl font-semibold mb-4">Ad Review</h1>
+
+      {selectedAdId && (<AdConfirmationPopup
+          onConfirm={handleApprove}
+          onReject={handleReject}  
+          onCancel={() => setSelectedAdId("")}
+          buttonType={buttonType}/>)}
 
       {advertisements.length === 0 ? (
         <p>No Advertisements</p>
@@ -114,13 +134,13 @@ const AdminAdvertisementsPage = () => {
             <div className="flex mt-4 space-x-4">
               <button
                 className="bg-green-500 text-white p-2 rounded hover:bg-green-600 focus:outline-none"
-                onClick={() => handleApprove(ad._id)}
+                onClick={() => handleButtonClicked(ad._id, "Approve")}
               >
                 Approve
               </button>
               <button
                 className="bg-red-500 text-white p-2 rounded hover:bg-red-600 focus:outline-none"
-                onClick={() => handleReject(ad._id)}
+                onClick={() => handleButtonClicked(ad._id, "Reject")}
               >
                 Reject
               </button>
