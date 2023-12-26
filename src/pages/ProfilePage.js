@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import HomePageNavbar from "../components/HomePageNavbar";
-import { useEffect, useState } from "react";
-import useApiPrivate from "../hooks/useAPIPrivate";
 import { useSelector } from "react-redux";
 
 const ProfilePage = () => {
