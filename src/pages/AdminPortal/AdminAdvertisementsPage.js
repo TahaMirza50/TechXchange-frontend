@@ -123,7 +123,7 @@ const AdminAdvertisementsPage = () => {
                       key={index}
                       src={image}
                       alt={`Ad Image ${index}`}
-                      className="w-16 h-16 object-cover rounded-md cursor-pointer"
+                      className="w-16 h-16 object-cover rounded-md cursor-pointer hover:outline"
                       onClick={() => openImageModal(image)}
                     />
                   ))}

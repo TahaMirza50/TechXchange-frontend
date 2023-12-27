@@ -75,15 +75,15 @@ const AdminUsersPage = () => {
           {/* {selectedUser && (
         <UserDetailsPopup user={selectedUser} onClose={handleCloseModal} />
       )} */}
-          <div className="mb-4 pt-5">
-            <label htmlFor="selectedValue" className="mr-2 font-medium">
+          <div className="mb-4 pt-5 font-medium">
+            <label htmlFor="selectedValue" className="mr-2">
               Rating:
             </label>
             <select
               id="selectedValue"
               value={selectedValue}
               onChange={handleDropdownChange}
-              className="p-2 border rounded"
+              className="p-2 border rounded mr-2"
             >
               {/* <option value="All">All</option> */}
               <option value="0">0</option>
@@ -93,6 +93,7 @@ const AdminUsersPage = () => {
               <option value="4">4</option>
               <option value="5">5</option>
             </select>
+            and less
           </div>
     
           {

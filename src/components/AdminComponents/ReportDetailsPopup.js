@@ -1,7 +1,7 @@
-import { useEffect, useState} from 'react';
+import { useState } from 'react';
 
 const ReportDetailsPopup = ({ report, advert, closePopup, apiPrivate}) => {
-  
+  const [selectedImage, setSelectedImage] = useState(null);
   const [advertDeleted, setadvertDeleted] = useState(advert.delete);
 
   const deleteAd = async () => {
@@ -18,11 +18,21 @@ const ReportDetailsPopup = ({ report, advert, closePopup, apiPrivate}) => {
     }
   }
 
+  const openImageModal = (image) => {
+    setSelectedImage(image);
+  };
+
+  const closeImageModal = () => {
+    setSelectedImage(null);
+  };
+
     return (
-      <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-opacity-50 bg-gray-900">
-        <div className="bg-white p-6 rounded-md shadow-lg max-w-md">
+      <div className='fixed overflow-y-auto top-0 left-0 bg-opacity-50 bg-gray-900 w-screen h-screen'>
+      <div className=" flex items-center justify-center ">
+        
+      <div className='flex space-x-5 bg-white p-6 mt-40 rounded-md shadow-lg max-w-md'>
+        <div className="flex-col ">
           
-  
           {/* Report details */}
           <div className="mt-6">
             <h2 className="text-xl font-semibold mb-2">Report Details</h2>
@@ -59,16 +69,7 @@ const ReportDetailsPopup = ({ report, advert, closePopup, apiPrivate}) => {
               <span className="font-bold">Status:</span> {advert.status}
             </p>
             {/* Add logic to display images */}
-            <span>
-            {advert.images && (
-              <div>
-                <h3 className="text-lg font-semibold mb-2">Images</h3>
-                {advert.images.map((image, index) => (
-                  <img key={index} src={image} alt={`Image ${index}`} className="mb-2" />
-                ))}
-              </div>
-            )}
-            </span>
+            
             
             {/* Close button */}
           <button
@@ -97,10 +98,45 @@ const ReportDetailsPopup = ({ report, advert, closePopup, apiPrivate}) => {
             
           </span>
           </div>
+          
         </div>
+
+        <span>
+            {advert.images && (
+              <div>
+                <h3 className="mt-6 text-lg font-semibold mb-2">Images</h3>
+                {advert.images.map((image, index) => (
+                <img 
+                key={index} 
+                src={image} 
+                alt={`Image ${index}`} 
+                style={{ width: '100px', height: '100x', display: 'block' }} className="mb-2 cursor-pointer hover:outline" data-carousel-item
+                onClick={() => openImageModal(image)}/>
+                ))}
+              </div>
+                      )}
+                      </span>
+            </div>
+      </div>
+      {selectedImage && (
+        <div
+          className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-75"
+          onClick={closeImageModal}
+        >
+          <img
+            src={selectedImage}
+            alt="Selected Image"
+            className="max-h-full max-w-full cursor-pointer"
+            onClick={closeImageModal}
+          />
+        </div>
+      )}
       </div>
     );
   };
   
+  // {advert.images.map((image, index) => (
+  //   <img key={index} src={image} alt={`Image ${index}`} style={{ width: '100px', height: 'auto', display: 'block' }} className="mb-2" data-carousel-item/>
+  // ))}
   export default ReportDetailsPopup;
   
