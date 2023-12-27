@@ -4,7 +4,7 @@ import HomePageNavbar from "../components/HomePageNavbar";
 import useApiPrivate from "../hooks/useAPIPrivate";
 import { useSelector } from "react-redux";
 import img from "../assets/images/chats.png"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ChatRoom = () => {
     const [chats, setChats] = useState([]);
@@ -16,6 +16,7 @@ const ChatRoom = () => {
     const user = useSelector((state) => state.userProfile.value);
 
     const apiPrivate = useApiPrivate();
+    const navigate = useNavigate();
 
     useEffect(() => {
 
@@ -206,7 +207,7 @@ const ChatRoom = () => {
                                             }
                                         </p>
                                         <div className="flex flex-row gap-3 items-center">
-                                            <button className="border-2 hover:bg-sky-700 bg-sky-500 py-1 px-1 rounded-xl border-transparent">Go to ad</button>
+                                            <button onClick={() => navigate(`/advert/${visibleChat.advertId}`)} className="border-2 hover:bg-sky-700 bg-sky-500 py-1 px-1 rounded-xl border-transparent">Go to ad</button>
                                             {/* <svg onClick={handleReloadChat} class="w-4 h-4 text-white hover:text-green-700 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
                                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 1v5h-5M2 19v-5h5m10-4a8 8 0 0 1-14.947 3.97M1 10a8 8 0 0 1 14.947-3.97" />
                                             </svg> */}
