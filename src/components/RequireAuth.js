@@ -1,38 +1,38 @@
 import { useLocation, Navigate, Outlet, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import { jwtDecode } from "jwt-decode";
-import { useEffect } from "react";
+// import { jwtDecode } from "jwt-decode";
+// import { useEffect } from "react";
 
 const RequiredAuth = ({ allowedRole }) => {
     const { auth, setAuth } = useAuth();
     const location = useLocation();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
-    useEffect(() => {
-        if (!auth?.email) {
+    // useEffect(() => {
+    //     if (!auth?.email) {
 
-            const storedAccessToken = localStorage.getItem('accessToken');
+    //         const storedAccessToken = localStorage.getItem('accessToken');
 
-            if (storedAccessToken) {
+    //         if (storedAccessToken) {
 
-                const decodedToken = jwtDecode(storedAccessToken);
-                const { email, role } = decodedToken;
+    //             const decodedToken = jwtDecode(storedAccessToken);
+    //             const { email, role } = decodedToken;
 
-                setAuth({
-                    accessToken: storedAccessToken,
-                    email,
-                    role,
-                });
+    //             setAuth({
+    //                 accessToken: storedAccessToken,
+    //                 email,
+    //                 role,
+    //             });
 
-                if (role === 'user') {
-                    navigate('/home');
-                } else if (role === 'admin') {
-                    navigate('/admin-dashboard');
-                }
+    //             if (role === 'user') {
+    //                 navigate('/home');
+    //             } else if (role === 'admin') {
+    //                 navigate('/admin-dashboard');
+    //             }
 
-            }
-        }
-    }, [navigate, setAuth,auth?.email]);
+    //         }
+    //     }
+    // }, [navigate, setAuth,auth?.email]);
 
     // if (!auth?.email) {
 

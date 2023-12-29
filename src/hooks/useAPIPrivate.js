@@ -27,14 +27,14 @@ const useApiPrivate = () => {
                 if(error?.response.status === 401 && !prevRequest?.sent){
                     prevRequest.sent = true;
                     const newAccessToken = await refresh();
-                    // console.log("hello")
+                    navigate(0);
                     prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
                     return apiPrivate(prevRequest);
                 }
                 if(error?.response.status === 403){
-                    console.log("hello")
                     localStorage.removeItem('accessToken');
                     navigate(0);
+                    return;
                 }
                 return Promise.reject(error);
             }
