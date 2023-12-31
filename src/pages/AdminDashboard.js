@@ -28,7 +28,7 @@ const AdminDashboard = () => {
     }
 
     return ( 
-        <div className="h-screen w-screen bg-white ">
+        <div className="bg-white ">
             <div className='flex-col space-y-16'>
                 <LoggedInNavbar name="Admin" profileImage={adminProfileImage}/>
                 <SideBar handleLogOut={handleLogOut} />
