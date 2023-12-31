@@ -1,13 +1,15 @@
 import { apiPrivate } from "../services/api";
 import { useEffect } from "react";
 import useRefreshToken from "./useRefreshToken";
-import useAuth from "./useAuth";
+// import useAuth from "./useAuth";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const useApiPrivate = () => {
     const refresh = useRefreshToken();
-    const {auth} = useAuth();
+    // const {auth} = useAuth();
     const navigate = useNavigate();
+    const auth = useSelector((state) => state.auth.value);
 
     useEffect(()=>{
 
@@ -27,15 +29,14 @@ const useApiPrivate = () => {
                 if(error?.response.status === 401 && !prevRequest?.sent){
                     prevRequest.sent = true;
                     const newAccessToken = await refresh();
-                    navigate(0);
                     prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
                     return apiPrivate(prevRequest);
                 }
-                if(error?.response.status === 403){
-                    localStorage.removeItem('accessToken');
-                    navigate(0);
-                    return;
-                }
+                // if(error?.response.status === 403){
+                //     localStorage.removeItem('accessToken');
+                //     navigate(0);
+                //     return;
+                // }
                 return Promise.reject(error);
             }
         )

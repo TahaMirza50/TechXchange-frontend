@@ -1,16 +1,11 @@
 import { Carousel } from 'flowbite-react';
 import Navbar from "../components/Navbar";
 import img1 from "../assets/images/gaming-pc.png";
-import img2 from "../assets/images/phone.png"
-import img3 from "../assets/images/ps5.png"
-import img4 from "../assets/images/GPU.png"
-import { useEffect } from 'react';
+import img2 from "../assets/images/phone.png";
+import img3 from "../assets/images/ps5.png";
+import img4 from "../assets/images/GPU.png";
 
 const StartPage = () => {
-
-    useEffect(() => {
-        
-    })
 
     return (
         <div className="h-screen bg-white flex flex-col">

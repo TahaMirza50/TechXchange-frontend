@@ -1,11 +1,16 @@
-import { useLocation, Navigate, Outlet, useNavigate } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
+import { useLocation, Navigate, Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 // import { jwtDecode } from "jwt-decode";
 // import { useEffect } from "react";
 
 const RequiredAuth = ({ allowedRole }) => {
-    const { auth, setAuth } = useAuth();
+    const auth = useSelector((state) => state.auth.value);
     const location = useLocation();
+
+    // useEffect(() => {
+    //     console.log(auth)
+    // },[])
     // const navigate = useNavigate();
 
     // useEffect(() => {
@@ -64,7 +69,7 @@ const RequiredAuth = ({ allowedRole }) => {
             ? <Outlet />
             : auth?.email
                 ? <Navigate to="/unauthorized" state={{ from: location }} replace />
-                : <Navigate to="/login" state={{ from: location }} replace />
+                : <Navigate to="/" state={{ from: location }} replace />
     );
 }
 

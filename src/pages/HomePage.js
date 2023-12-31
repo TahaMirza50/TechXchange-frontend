@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import useApiPrivate from "../hooks/useAPIPrivate";
 import HomePageNavbar from "../components/HomePageNavbar";
 import img from "../assets/images/arthur-morgan.png"
@@ -20,7 +19,6 @@ const HomePage = () => {
     const dispatch = useDispatch();
 
     const apiPrivate = useApiPrivate();
-    const navigate = useNavigate();
 
     useEffect(() => {
         let isMounted = true;
@@ -30,7 +28,6 @@ const HomePage = () => {
             try {
                 const response = await apiPrivate.get('profile/get');
                 if (isMounted) {
-                    console.log(response.data);
                     dispatch(profile(
                         {
                             firstName: response.data.firstName,
@@ -55,9 +52,9 @@ const HomePage = () => {
             try {
                 const response = await apiPrivate.get('category');
                 if (isMounted && response.status === 200) {
-                    setCategories(response.data);
                     setCategoryOne(response.data[0]);
                     setCategoryTwo(response.data[3]);
+                    setCategories(response.data);
                     dispatch(category(response.data));
                 }
             } catch (error) {
