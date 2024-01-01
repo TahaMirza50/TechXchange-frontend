@@ -1,38 +1,43 @@
-import { useLocation, Navigate, Outlet, useNavigate } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
-import { jwtDecode } from "jwt-decode";
+import { useLocation, Navigate, Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { useEffect } from "react";
+// import { jwtDecode } from "jwt-decode";
+// import { useEffect } from "react";
 
 const RequiredAuth = ({ allowedRole }) => {
-    const { auth, setAuth } = useAuth();
+    const auth = useSelector((state) => state.auth.value);
     const location = useLocation();
-    const navigate = useNavigate();
 
-    useEffect(() => {
-        if (!auth?.email) {
+    // useEffect(() => {
+    //     console.log(auth)
+    // },[])
+    // const navigate = useNavigate();
 
-            const storedAccessToken = localStorage.getItem('accessToken');
+    // useEffect(() => {
+    //     if (!auth?.email) {
 
-            if (storedAccessToken) {
+    //         const storedAccessToken = localStorage.getItem('accessToken');
 
-                const decodedToken = jwtDecode(storedAccessToken);
-                const { email, role } = decodedToken;
+    //         if (storedAccessToken) {
 
-                setAuth({
-                    accessToken: storedAccessToken,
-                    email,
-                    role,
-                });
+    //             const decodedToken = jwtDecode(storedAccessToken);
+    //             const { email, role } = decodedToken;
 
-                if (role === 'user') {
-                    navigate('/home');
-                } else if (role === 'admin') {
-                    navigate('/admin-dashboard');
-                }
+    //             setAuth({
+    //                 accessToken: storedAccessToken,
+    //                 email,
+    //                 role,
+    //             });
 
-            }
-        }
-    }, [navigate, setAuth,auth?.email]);
+    //             if (role === 'user') {
+    //                 navigate('/home');
+    //             } else if (role === 'admin') {
+    //                 navigate('/admin-dashboard');
+    //             }
+
+    //         }
+    //     }
+    // }, [navigate, setAuth,auth?.email]);
 
     // if (!auth?.email) {
 
@@ -64,7 +69,7 @@ const RequiredAuth = ({ allowedRole }) => {
             ? <Outlet />
             : auth?.email
                 ? <Navigate to="/unauthorized" state={{ from: location }} replace />
-                : <Navigate to="/login" state={{ from: location }} replace />
+                : <Navigate to="/" state={{ from: location }} replace />
     );
 }
 

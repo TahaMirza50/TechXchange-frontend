@@ -1,15 +1,44 @@
-import { createContext, useState } from "react";
+// import { jwtDecode } from "jwt-decode";
+// import { createContext, useEffect, useState } from "react";
+// import { useNavigate } from "react-router-dom";
 
-const AuthContext = createContext({});
+// const AuthContext = createContext({});
 
-export const AuthProvider = ({ children }) => {
-    const [auth, setAuth] = useState({});
+// export const AuthProvider = ({ children }) => {
+//     const [auth, setAuth] = useState({});
+//     const navigate = useNavigate();
 
-    return (
-        <AuthContext.Provider value={{ auth, setAuth }}>
-            {children}
-        </AuthContext.Provider>
-    )
-}
+//     useEffect(() => {
+//         if (!auth?.email) {
 
-export default AuthContext;
+//             const storedAccessToken = localStorage.getItem('accessToken');
+
+//             if (storedAccessToken) {
+
+//                 const decodedToken = jwtDecode(storedAccessToken);
+//                 const { email, role } = decodedToken;
+
+//                 setAuth({
+//                     accessToken: storedAccessToken,
+//                     email,
+//                     role,
+//                 });
+
+//                 if (role === 'user') {
+//                     navigate('/home');
+//                 } else if (role === 'admin') {
+//                     navigate('/admin-dashboard');
+//                 }
+
+//             }
+//         }
+//     }, [auth?.email,navigate]);
+
+//     return (
+//         <AuthContext.Provider value={{ auth, setAuth }}>
+//             {children}
+//         </AuthContext.Provider>
+//     )
+// }
+
+// export default AuthContext;

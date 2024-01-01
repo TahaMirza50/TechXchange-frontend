@@ -1,19 +1,34 @@
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/images/logo.png'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import useApiPrivate from '../hooks/useAPIPrivate';
 import { Dropdown } from 'flowbite-react';
 import NotificationCard from './NotificationCard';
+import { removeAuthValues } from '../features/auth';
+import { api } from '../services/api';
 
 const HomePageNavbar = () => {
 
     const [notBox, setNotBox] = useState(null);
     const apiPrivate = useApiPrivate();
     const user = useSelector((state) => state.userProfile.value);
+    const dispatch = useDispatch();
 
-    const handleLogOut = () => {
-        localStorage.removeItem('accessToken');
+    const handleLogOut = async () => {
+        try {
+            const response = await apiPrivate.get(
+                "/auth/logout", {
+                withCredentials: true
+            }
+            )
+            if (response.status === 200) {
+                dispatch(removeAuthValues());
+            }
+            console.log(response)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const deleteNotification = async (id) => {
@@ -85,14 +100,14 @@ const HomePageNavbar = () => {
                             </div>
                             <div className="flex items-center">
                                 <li>
-                                    <a href="/" onClick={handleLogOut} className=" block py-2 px-3 text-gray-900 rounded hover:text-red-700 dark:text-white hover:bg-red-700 md:hover:bg-transparent md:border-0 md:hover:text-red-700 md:p-0 md:dark:hover:text-red-700 dark:hover:bg-red-700 dark:hover:text-red-700 md:dark:hover:bg-transparent">
+                                    <button onClick={handleLogOut} className=" block py-2 px-3 text-gray-900 rounded hover:text-red-700 dark:text-white hover:bg-red-700 md:hover:bg-transparent md:border-0 md:hover:text-red-700 md:p-0 md:dark:hover:text-red-700 dark:hover:bg-red-700 dark:hover:text-red-700 md:dark:hover:bg-transparent">
                                         <div className='flex gap-1 items-center'>
                                             <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16">
                                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 8h11m0 0-4-4m4 4-4 4m-5 3H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h3" />
                                             </svg>
                                             <p>Logout</p>
                                         </div>
-                                    </a>
+                                    </button>
                                 </li>
                             </div>
                             <div className='flex items-center'>

@@ -4,10 +4,12 @@ import {api} from "../services/api";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import ModalAlerts from "../components/ModalAlerts";
-import useAuth from "../hooks/useAuth";
+import { useDispatch } from "react-redux";
+import { setAuthValues } from "../features/auth";
 
-const Login = ({ onLogin }) => {
-    const { setAuth } = useAuth();
+const Login = () => {
+    const dispatch = useDispatch();
+    // const { setAuth } = useAuth();
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
     
@@ -32,12 +34,13 @@ const Login = ({ onLogin }) => {
             }).then((res) => {
                 if (res.status === 200) {
                     const {accessToken} = res.data;
-                    localStorage.setItem("accessToken", accessToken);
+                    // localStorage.setItem("accessToken", accessToken);
 
                     const decodedToken = jwtDecode(accessToken);
                     const role = decodedToken.role;
                     const email = decodedToken.email;
-                    setAuth({ email, role, accessToken });
+                    dispatch(setAuthValues({ email, role, accessToken }));
+                    // setAuth({ email, role, accessToken });
                     if (decodedToken.role === "admin") {
                         navigate("/admin-dashboard");
                     } else {
