@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import {Outlet} from "react-router-dom"
 import LoggedInNavbar from '../components/LoggedInNavbar'
 import SideBar from '../components/AdminComponents/SideBar'
@@ -8,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { apiPrivate } from "../services/api";
 
 const AdminDashboard = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const handleLogOut = async () => {

@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import logo from '../assets/images/logo.png'
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
@@ -6,7 +6,6 @@ import useApiPrivate from '../hooks/useAPIPrivate';
 import { Dropdown } from 'flowbite-react';
 import NotificationCard from './NotificationCard';
 import { removeAuthValues } from '../features/auth';
-import { api } from '../services/api';
 
 const HomePageNavbar = () => {
 

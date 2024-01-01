@@ -1,13 +1,11 @@
 import { apiPrivate } from "../services/api";
 import { useEffect } from "react";
 import useRefreshToken from "./useRefreshToken";
-// import useAuth from "./useAuth";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const useApiPrivate = () => {
     const refresh = useRefreshToken();
-    // const {auth} = useAuth();
     const navigate = useNavigate();
     const auth = useSelector((state) => state.auth.value);
 
@@ -16,7 +14,7 @@ const useApiPrivate = () => {
         const requestIntercept = apiPrivate.interceptors.request.use(
             config => {
                 if(!config.headers['Authorization']){
-                    config.headers['Authorization'] = `Bearer ${auth?.accessToken}`
+                    config.headers['Authorization'] = `Bearer ${auth.accessToken}`
                 }
                 return config;
             }, (error) => Promise.reject(error)
