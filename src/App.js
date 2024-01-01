@@ -15,8 +15,13 @@ import AdminDashboard from "./pages/AdminDashboard";
 import Unauthorized from "./pages/Unauthorized";
 import CreateAd from "./pages/CreateAd";
 import AdvertPage from "./pages/AdvertPage";
+
 import PersistentLogin from "./components/PersistentLogin";
 import PublicRouteLogin from "./components/PublicRouteLogin";
+
+import MyAdverts from "./components/MyAdverts";
+
+
 
 function App() {
 
@@ -67,8 +72,10 @@ function App() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/chats" element={<ChatRoom />} />
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/home/create-ad" element={<CreateAd />} />
-          <Route path="/advert/:id" element={<AdvertPage />} />
+          <Route path="/home/create-ad" element={<CreateAd/>}/>
+          <Route path="/advert/:id" element={<AdvertPage/>}/>
+          <Route path="/myadverts" element={<MyAdverts/>}/>
+
         </Route>
 
 
