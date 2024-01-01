@@ -12,26 +12,23 @@ function SearchResultsPage() {
   const apiPrivate = useApiPrivate();
 
   useEffect(() => {
-    console.log(searchResult.search);
 
     const getAdvertsbySearch = async () => {
-      try{
-        await apiPrivate.get('/advert', {
-          title: searchResult.search
-        }).then((res) => {
+      try {
+        await apiPrivate.get('/advert', { params: {title: searchResult.search}}).then((res) => {
           if (res.status === 200) {
             setAdverts(res.data);
           }
         });
-      }
-      catch (error) {
+      } catch (error) {
         console.log(error);
       }
-    }
+    };
+    
 
     getAdvertsbySearch();
 
-  }, []);
+  }, [searchResult]);
 
   return (
     <div>
