@@ -31,7 +31,7 @@ function MyAdverts() {
             isMounted = false;
             controller.abort();
         };
-    }, []);
+    }, [apiPrivate]);
 
     return (
         <div>
@@ -56,9 +56,8 @@ function MyAdverts() {
                     </li>
                 </ol>
             </nav>
-            <h1 className="font-bold text-3xl mb-4 ml-20 mt-10">My Advertisements</h1>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ml-20 mb-10">
+            <h4 className="text-2xl font-extrabold mx-28 mb-4 dark:text-white py-4">My Adverts</h4>
+            <div className="grid grid-cols-1sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mx-28 mb-10 gap-5">
                 {adverts.length === 0 ? (
                     <p>No Adverts</p>
                 ) : (
@@ -67,7 +66,6 @@ function MyAdverts() {
                     ))
                 )}
             </div>
-
             <Footer />
         </div>
     );
