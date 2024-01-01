@@ -6,13 +6,17 @@ import useApiPrivate from '../hooks/useAPIPrivate';
 import { Dropdown } from 'flowbite-react';
 import NotificationCard from './NotificationCard';
 import { removeAuthValues } from '../features/auth';
+import { searchVal } from '../features/search';
+import { useNavigate } from 'react-router-dom';
 
 const HomePageNavbar = () => {
 
     const [notBox, setNotBox] = useState(null);
+    const [searchValue, setSearchValue] = useState('');
     const apiPrivate = useApiPrivate();
     const user = useSelector((state) => state.userProfile.value);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleLogOut = async () => {
         try {
@@ -28,6 +32,7 @@ const HomePageNavbar = () => {
         } catch (error) {
             console.log(error)
         }
+        console.log(searchValue)
     }
 
     const deleteNotification = async (id) => {
@@ -43,6 +48,21 @@ const HomePageNavbar = () => {
         } catch (error) {
             console.log(error)
         }
+    }
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        try{
+            console.log(searchVal);
+            dispatch(searchVal({
+                search: searchValue
+            }));
+            navigate('/results');
+        }
+        catch (error) {
+            console.log(error);
+        }
+        
     }
 
     useEffect(() => {
@@ -152,7 +172,7 @@ const HomePageNavbar = () => {
             <nav className="bg-blue-900 dark:bg-gray-700">
                 <div className="flex flex-wrap items-center justify-between mx-28 p-4">
                     <div className='w-1/2'>
-                        <form>
+                        <form onSubmit={handleSearch}>
                             <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                             <div className="relative">
                                 <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -160,7 +180,7 @@ const HomePageNavbar = () => {
                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                                     </svg>
                                 </div>
-                                <input type="search" id="default-search" className="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-2xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Adverts" required />
+                                <input type="search" id="default-search" value={searchValue} onChange={(e) => setSearchValue(e.target.value)} className="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-2xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Adverts" required />
                                 <button type="submit" className="text-white absolute end-1 bottom-1 top-1 right-1 bg-sky-500 hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-2xl text-xs px-2 py-1 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
                             </div>
                         </form>

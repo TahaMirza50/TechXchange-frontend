@@ -19,7 +19,8 @@ import AdvertPage from "./pages/AdvertPage";
 import PersistentLogin from "./components/PersistentLogin";
 import PublicRouteLogin from "./components/PublicRouteLogin";
 
-import MyAdverts from "./components/MyAdverts";
+import MyAdverts from "./pages/MyAdverts";
+import SearchResultsPage from "./pages/SearchResultsPage";
 
 
 
@@ -75,7 +76,7 @@ function App() {
           <Route path="/home/create-ad" element={<CreateAd/>}/>
           <Route path="/advert/:id" element={<AdvertPage/>}/>
           <Route path="/myadverts" element={<MyAdverts/>}/>
-
+          <Route path="/results" element={<SearchResultsPage/>}/>
         </Route>
 
 
