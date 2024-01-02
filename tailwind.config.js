@@ -8,7 +8,11 @@ module.exports = {
     fontFamily:{
       'sans':'system-ui',
     },
-    extend: {},
+    extend: {
+      spacing: {
+        '112' : '28rem'
+      }
+    },
   },
   plugins: [
     require('flowbite/plugin')

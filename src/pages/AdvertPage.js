@@ -21,6 +21,8 @@ const AdvertPage = () => {
     const [categoryName, setCategoryName] = useState("");
     const [userProfile, setUserProfile] = useState(null);
 
+    const [chatLoading,setChatLoading] = useState(false);
+
     useEffect(() => {
 
         const getAdvertAndUser = async () => {
@@ -52,9 +54,41 @@ const AdvertPage = () => {
 
     }, [apiPrivate, id, user.profileID, user, categories])
 
-    // useEffect(() => {
-    //     console.log(advert)
-    // }, [advert, categories])
+    const handleChatNow = async (userOneID,userTwoID) => {
+        setChatLoading(true);
+        try {
+            console.log(id,userOneID,userTwoID);
+            const response = await apiPrivate.post('chatroom/create', 
+            {
+                advertId: id,
+                participants: [userOneID,userTwoID]
+            })
+            if(response.status === 200){
+                setChatLoading(false);
+                navigate(`/chats`);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const renderStar = (num) => {
+        const stars = [];
+
+        for (let i = 1; i <= 5; i++) {
+            const starColor = i <= num
+                ? "text-yellow-300"
+                : "text-gray-500";
+
+            stars.push(
+                <svg className={`w-4 h-4 ${starColor} me-1`} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                </svg>
+            );
+        }
+
+        return stars;
+    }
 
     return (
         <div>
@@ -121,15 +155,35 @@ const AdvertPage = () => {
                         </button>
                     </div>
                 </div>
-                <div className="border-2 h-full w-1/3 rounded-md">
-                    <div className="flex flex-row h-14 bg-blue-900 rounded-t-md items-center px-5" />
+                <div className="border-2 h-full w-1/3 rounded-md flex flex-col items-center">
+                    <div className="flex flex-row h-14 bg-blue-900 w-full rounded-t-md" />
                     {userProfile &&
-                        <div className="bg-gray-200 w-full m-5 p-2 rounded-md flex flex-row">
-                            <svg className="w-1/4 h-full text-blue-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
-                            </svg>
-                            <p>{userProfile.firstName} {userProfile.lastName}</p>
-                        </div>}
+                        <div className="my-5 w-11/12 p-5 bg-gray-200 rounded-md">
+                            <div className="flex items-center flex-row gap-5">
+                                <svg className="w-1/6 h-20 text-blue-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
+                                </svg>
+                                <div className="flex flex-col justify-center h-20">
+                                    <h2 className="font-bold">{userProfile.firstName} {userProfile.lastName}</h2>
+                                    <div className="flex flex-row items-center">
+                                        {renderStar(userProfile.rating)}
+                                        <p>{userProfile.rating} ({userProfile.numberOfReviews})</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="flex flex-row items-center gap-2 mb-2">
+                                <h6 className="text-md font-bold">Contact No:</h6>
+                                <p>{userProfile.contact}</p>
+                            </div>
+                            <h6 className="text-md font-bold">Social Media Links</h6>
+                            <div className="flex flex-col">
+                                {userProfile.socialMediaLinks.map((link) =>
+                                    <a className="hover:text-sky-500 text-sm" target="_blank" rel="noopener noreferrer" href={`${link}`}>{link}</a>
+                                )}
+                            </div>
+                        </div>
+                    }
+                    {!myAd && <button disabled={chatLoading} onClick={() => {handleChatNow(userProfile._id,user.profileID)}} className="text-white mb-5 w-1/3 font-bold border-2 hover:bg-sky-700 bg-sky-500 py-1 px-1 rounded-xl border-transparent">Chat Now</button>}
                 </div>
             </div>}
             <Footer />

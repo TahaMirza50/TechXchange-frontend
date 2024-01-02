@@ -7,20 +7,26 @@ const AdvertCard = ({ advert }) => {
     const navigate = useNavigate()
     const user = useSelector((state) => state.userProfile.value);
     const [myAd, setMyAd] = useState(false);
+    const [status, setStatus] = useState(false);
+    const [sold, setSold] = useState(false);
 
     useEffect(() => {
         console.log(user.profileID, advert.userId)
-        if(user.profileID === advert.userId) {
+        if (user.profileID === advert.userId) {
             setMyAd(true);
+            if (advert.status === "in review")
+                setStatus(true);
+            if (advert.status === "sold")
+                setSold(true);
         }
-    },[user,advert.userId])
+    }, [user, advert.userId, advert.status])
 
     const date = new Date(advert.timestamp);
     const formattedDate = date.toDateString();
     const formattedTime = date.toLocaleTimeString();
 
     return (
-        <div onClick={() => navigate(`/advert/${advert._id}`)} className="border-2 w-60 h-96 m-1 flex flex-col flex-shrink-0 rounded-md items-center hover:shadow-md hover:shadow-gray-400">
+        <button disabled={status || sold} onClick={() => navigate(`/advert/${advert._id}`)} className="border-2 text-left w-60 h-112 m-1 flex flex-col flex-shrink-0 rounded-md items-center hover:shadow-md hover:shadow-gray-400">
             <img className="h-1/2 m-2 border-b-2" src={advert.images[0]} alt="title"></img>
             <div className="flex flex-row w-full items-center p-2">
                 <p className="font-bold text-lg w-full text-blue-900">Rs. {advert.price}</p>
@@ -30,9 +36,10 @@ const AdvertCard = ({ advert }) => {
             </div>
             <p className="w-full pb-2 px-2">{advert.title}</p>
             <p className="w-full text-sm font-extralight pb-2 px-2">{advert.location}</p>
+            {(status || sold) && <p className="w-full text-sm text-center font-bold text-red-600">{advert.status}</p>}
             <div className="flex flex-col flex-grow"></div>
             <p className="w-full  text-right text-sm pb-2 px-2">{formattedDate + " " + formattedTime}</p>
-        </div>
+        </button>
     );
 }
 
