@@ -22,6 +22,7 @@ function SearchResultsPage() {
         });
       } catch (error) {
         console.log(error);
+        setAdverts([]);
       }
     };
     
