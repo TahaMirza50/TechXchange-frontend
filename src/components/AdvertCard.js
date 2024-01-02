@@ -36,7 +36,7 @@ const AdvertCard = ({ advert }) => {
             </div>
             <p className="w-full pb-2 px-2">{advert.title}</p>
             <p className="w-full text-sm font-extralight pb-2 px-2">{advert.location}</p>
-            {(status || sold) && <p className="w-full text-sm font-bold text-red-600">{advert.status}</p>}
+            {(status || sold) && <p className="w-full text-sm text-center font-bold text-red-600">{advert.status}</p>}
             <div className="flex flex-col flex-grow"></div>
             <p className="w-full  text-right text-sm pb-2 px-2">{formattedDate + " " + formattedTime}</p>
         </button>
