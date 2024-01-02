@@ -6,7 +6,6 @@ import useApiPrivate from '../hooks/useAPIPrivate';
 import { Dropdown } from 'flowbite-react';
 import NotificationCard from './NotificationCard';
 import { removeAuthValues } from '../features/auth';
-import { searchVal } from '../features/search';
 import { useNavigate } from 'react-router-dom';
 
 const HomePageNavbar = () => {
