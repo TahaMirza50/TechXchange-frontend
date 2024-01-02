@@ -8,13 +8,14 @@ import { Link } from "react-router-dom";
 function MyAdverts() {
     const apiPrivate = useApiPrivate();
     const [adverts, setAdverts] = useState([]);
+    const [userAction, setUserAction] = useState(false);
 
     useEffect(() => {
 
         let isMounted = true;
         const controller = new AbortController();
         
-        const getmyAds = async () => {
+        const getMyAds = async () => {
             try {
                 const res = await apiPrivate.get('advert/get');
                 if (isMounted && res.status === 200) {
@@ -25,13 +26,13 @@ function MyAdverts() {
             }
         };
 
-        getmyAds();
+        getMyAds();
 
         return () => {
             isMounted = false;
             controller.abort();
         };
-    }, [apiPrivate]);
+    }, [apiPrivate,userAction]);
 
     return (
         <div>
@@ -56,16 +57,14 @@ function MyAdverts() {
                     </li>
                 </ol>
             </nav>
-
-            <h1 className="font-bold text-3xl mb-4 ml-20 mt-10">My Advertisements</h1>
-            <div className="grid grid-cols-1sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mx-28 mb-10 gap-5">
+            <h4 className="text-2xl font-extrabold my-10 dark:text-white mx-28">My Adverts</h4>
+            <div className="grid grid-cols-1sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mx-28 gap-5 mb-10">
                 {adverts.length === 0 ? (
-
                     <p>No Adverts</p>
                 ) 
                 : (
                     adverts.map((advert, index) => (
-                        <AdvertCard key={index} advert={advert} />
+                        <AdvertCard key={index} advert={advert} setUserAction={()=>setUserAction(!userAction)} />
                     ))
                 )}
             </div>
