@@ -1,11 +1,9 @@
-import { useNavigate } from "react-router-dom";
-import { api, apiPrivate } from "../services/api";
-import { useDispatch, useSelector } from "react-redux";
+import { apiPrivate } from "../services/api";
+import { useDispatch } from "react-redux";
 import { removeAuthValues, setAuthValues } from "../features/auth";
 import { jwtDecode } from "jwt-decode";
 
 const useRefreshToken = () => {
-    // const { setAuth } = useAuth();
     const dispatch = useDispatch();
 
     const refresh = async () => {
@@ -17,11 +15,6 @@ const useRefreshToken = () => {
             }
             )
             const decodedToken = jwtDecode(response.data.accessToken);
-            // localStorage.setItem("accessToken", response.data.accessToken);
-            // setAuth(prev => {
-            //     return { ...prev, accessToken: response.data.accessToken }
-            // });
-            // console.log(decodedToken);
             dispatch(setAuthValues({ email: decodedToken.email, role: decodedToken.role, accessToken: response.data.accessToken }));
 
             return response.data.accessToken

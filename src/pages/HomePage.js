@@ -39,7 +39,9 @@ const HomePage = () => {
                             CNIC: response.data.CNIC,
                             rating: response.data.rating,
                             numberOfReviews: response.data.numberOfReviews,
-                            socialMediaLinks: response.data.socialMediaLinks                        }
+                            socialMediaLinks: response.data.socialMediaLinks,
+                            wishlist: response.data.wishlistID.wishlist
+                        }
                     ));
                 }
             } catch (error) {

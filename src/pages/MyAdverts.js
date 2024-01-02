@@ -57,11 +57,9 @@ function MyAdverts() {
                     </li>
                 </ol>
             </nav>
-
-            <h1 className="font-bold text-3xl mb-4 ml-20 mt-10">My Advertisements</h1>
-            <div className="grid grid-cols-1sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mx-28 mb-10 gap-5">
+            <h4 className="text-2xl font-extrabold my-10 dark:text-white mx-28">My Adverts</h4>
+            <div className="grid grid-cols-1sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mx-28 gap-5 mb-10">
                 {adverts.length === 0 ? (
-
                     <p>No Adverts</p>
                 ) 
                 : (

@@ -13,9 +13,10 @@ function SearchResultsPage() {
 
   useEffect(() => {
     console.log(state.searchValue)
-    const getAdvertsbySearch = async () => {
+
+    const getAdvertsBySearch = async () => {
       try {
-        await apiPrivate.get('/advert', { params: {title: state.searchValue}}).then((res) => {
+        await apiPrivate.get('advert/search', { params: {title: state.searchValue}}).then((res) => {
           if (res.status === 200) {
             setAdverts(res.data);
           }
@@ -26,9 +27,9 @@ function SearchResultsPage() {
     };
     
 
-    getAdvertsbySearch();
+    getAdvertsBySearch();
 
-  }, [state.searchValue]);
+  }, [state.searchValue,apiPrivate]);
 
   return (
     <div>
@@ -41,7 +42,7 @@ function SearchResultsPage() {
         ) 
         : (
           adverts.map((advert, index) => (
-          <AdvertCard key={index} advert={advert}/>
+          <AdvertCard key={index} advert={advert} onHomePage={true}/>
           ))
           )}
       </div>

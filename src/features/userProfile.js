@@ -12,15 +12,19 @@ export const userSlice = createSlice({
     CNIC: "",
     rating: null,
     numberOfReviews: 0,
-    socialMediaLinks: []
+    socialMediaLinks: [],
+    wishlist: []
   }},
   reducers: {
     profile: (state,action) => {
       state.value = action.payload;
+    },
+    wishlist: (state,action) => {
+      state.value.wishlist = action.payload;
     }
   }
 });
 
-export const {profile} = userSlice.actions;
+export const {profile,wishlist} = userSlice.actions;
 
 export default userSlice.reducer;

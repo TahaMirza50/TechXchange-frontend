@@ -26,36 +26,6 @@ import SearchResultsPage from "./pages/SearchResultsPage";
 
 function App() {
 
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
-
-  // useEffect(() => {
-  //     if (!auth?.email) {
-
-  //         const storedAccessToken = localStorage.getItem('accessToken');
-
-  //         if (storedAccessToken) {
-
-  //             const decodedToken = jwtDecode(storedAccessToken);
-  //             const { email, role } = decodedToken;
-
-  //             // setAuth({
-  //             //     accessToken: storedAccessToken,
-  //             //     email,
-  //             //     role,
-  //             // });
-  //             dispatch(setAuthValues({ email, role, accessToken: storedAccessToken }));
-
-  //             if (role === 'user') {
-  //                 navigate('/home');
-  //             } else if (role === 'admin') {
-  //                 navigate('/admin-dashboard');
-  //             }
-
-  //         }
-  //     }
-  // },[auth?.email,dispatch,navigate]);
-
   return (
     <Routes>
       {/* public routes */}
@@ -78,8 +48,6 @@ function App() {
           <Route path="/my-adverts" element={<MyAdverts/>}/>
           <Route path="/results" element={<SearchResultsPage/>}/>
         </Route>
-
-
 
         {/* admin routes */}
         <Route element={<RequiredAuth allowedRole="admin" />}>
