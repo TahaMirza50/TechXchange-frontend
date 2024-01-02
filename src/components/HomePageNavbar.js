@@ -50,21 +50,6 @@ const HomePageNavbar = () => {
         }
     }
 
-    const handleSearch = (e) => {
-        e.preventDefault();
-        try{
-            console.log(searchVal);
-            dispatch(searchVal({
-                search: searchValue
-            }));
-            navigate('/results');
-        }
-        catch (error) {
-            console.log(error);
-        }
-        
-    }
-
     useEffect(() => {
         const getNotifications = async () => {
             try {
@@ -172,7 +157,10 @@ const HomePageNavbar = () => {
             <nav className="bg-blue-900 dark:bg-gray-700">
                 <div className="flex flex-wrap items-center justify-between mx-28 p-4">
                     <div className='w-1/2'>
-                        <form onSubmit={handleSearch}>
+                        <form onSubmit={(e) => {
+                            e.preventDefault();
+                            navigate('/results', { state: {searchValue} })
+                            }}>
                             <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                             <div className="relative">
                                 <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -191,7 +179,7 @@ const HomePageNavbar = () => {
                                 <Link to="/home" className="text-white dark:text-white hover:text-sky-500" aria-current="page">Home</Link>
                             </li>
                             <li>
-                                <Link to="/myadverts" className="text-white dark:text-white hover:text-sky-500" aria-current="page">My Adverts</Link>
+                                <Link to="/my-adverts" className="text-white dark:text-white hover:text-sky-500" aria-current="page">My Adverts</Link>
                             </li>
                             <li>
                                 <Link to="/chats" className="text-white dark:text-white hover:text-sky-500">My Chats</Link>

@@ -75,7 +75,7 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/home/create-ad" element={<CreateAd/>}/>
           <Route path="/advert/:id" element={<AdvertPage/>}/>
-          <Route path="/myadverts" element={<MyAdverts/>}/>
+          <Route path="/my-adverts" element={<MyAdverts/>}/>
           <Route path="/results" element={<SearchResultsPage/>}/>
         </Route>
 
