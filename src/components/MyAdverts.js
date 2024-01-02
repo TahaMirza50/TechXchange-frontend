@@ -8,13 +8,14 @@ import { Link } from "react-router-dom";
 function MyAdverts() {
     const apiPrivate = useApiPrivate();
     const [adverts, setAdverts] = useState([]);
+    const [userAction, setUserAction] = useState(false);
 
     useEffect(() => {
 
         let isMounted = true;
         const controller = new AbortController();
         
-        const getmyAds = async () => {
+        const getMyAds = async () => {
             try {
                 const res = await apiPrivate.get('advert/get');
                 if (isMounted && res.status === 200) {
@@ -25,13 +26,13 @@ function MyAdverts() {
             }
         };
 
-        getmyAds();
+        getMyAds();
 
         return () => {
             isMounted = false;
             controller.abort();
         };
-    }, [apiPrivate]);
+    }, [apiPrivate,userAction]);
 
     return (
         <div>
@@ -62,7 +63,7 @@ function MyAdverts() {
                     <p>No Adverts</p>
                 ) : (
                     adverts.map((advert, index) => (
-                        <AdvertCard key={index} advert={advert} />
+                        <AdvertCard key={index} advert={advert} setUserAction={()=>setUserAction(!userAction)} />
                     ))
                 )}
             </div>

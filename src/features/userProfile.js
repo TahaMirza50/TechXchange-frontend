@@ -12,7 +12,8 @@ export const userSlice = createSlice({
     CNIC: "",
     rating: null,
     numberOfReviews: 0,
-    socialMediaLinks: []
+    socialMediaLinks: [],
+    wishlist: []
   }},
   reducers: {
     profile: (state,action) => {
