@@ -21,6 +21,8 @@ const AdvertPage = () => {
     const [categoryName, setCategoryName] = useState("");
     const [userProfile, setUserProfile] = useState(null);
 
+    const [chatLoading,setChatLoading] = useState(false);
+
     useEffect(() => {
 
         const getAdvertAndUser = async () => {
@@ -52,9 +54,26 @@ const AdvertPage = () => {
 
     }, [apiPrivate, id, user.profileID, user, categories])
 
+    const handleChatNow = async (userOneID,userTwoID) => {
+        setChatLoading(true);
+        try {
+            console.log(id,userOneID,userTwoID);
+            const response = await apiPrivate.post('chatroom/create', 
+            {
+                advertId: id,
+                participants: [userOneID,userTwoID]
+            })
+            if(response.status === 200){
+                setChatLoading(false);
+                navigate(`/chats`);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     const renderStar = (num) => {
         const stars = [];
-        console.log(num)
 
         for (let i = 1; i <= 5; i++) {
             const starColor = i <= num
@@ -164,7 +183,7 @@ const AdvertPage = () => {
                             </div>
                         </div>
                     }
-                    {!myAd && <button className="text-white mb-5 w-1/3 font-bold border-2 hover:bg-sky-700 bg-sky-500 py-1 px-1 rounded-xl border-transparent">Chat Now</button>}
+                    {!myAd && <button disabled={chatLoading} onClick={() => {handleChatNow(userProfile._id,user.profileID)}} className="text-white mb-5 w-1/3 font-bold border-2 hover:bg-sky-700 bg-sky-500 py-1 px-1 rounded-xl border-transparent">Chat Now</button>}
                 </div>
             </div>}
             <Footer />

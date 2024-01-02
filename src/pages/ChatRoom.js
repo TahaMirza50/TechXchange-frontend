@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import HomePageNavbar from "../components/HomePageNavbar";
 import useApiPrivate from "../hooks/useAPIPrivate";
@@ -42,15 +42,14 @@ const ChatRoom = () => {
         };
     }, [apiPrivate, deleteChat]);
 
-    const handleReloadChat = async () => {
+    const handleReloadChat = useCallback(async () => {
         try {
-            const response2 = await apiPrivate.get(`chatroom/advert/${visibleChat.advertId}`);
+            const response2 = await apiPrivate.get(`chatroom/advert/${visibleChat.advertId._id}`);
             setVisibleChat(response2.data);
-            setMessage("");
         } catch (error) {
             console.log(error);
         }
-    }
+    },[apiPrivate,visibleChat])
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -63,9 +62,10 @@ const ChatRoom = () => {
         return () => {
             clearInterval(intervalId);
         }
-    }, [chatView, visibleChat])
+    }, [chatView, visibleChat,handleReloadChat])
 
     const handleChatClick = (chat) => {
+        console.log(chat);
         setVisibleChat(chat);
         setChatView(true);
         setDeleteChat(false);
@@ -87,7 +87,7 @@ const ChatRoom = () => {
                         </div>
                         <p className="text-sm font-normal py-2.5 text-gray-900 dark:text-white">{msg.message}</p>
                     </div>
-                    <svg onClick={() => handleDeleteMessage(msg)} className="w-4 h-4 text-gray-800 dark:text-white hover:text-red-700" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+                    <svg onClick={(e) => handleDeleteMessage(e,msg)} className="w-4 h-4 text-gray-800 dark:text-white hover:text-red-700" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h16M7 8v8m4-8v8M7 1h4a1 1 0 0 1 1 1v3H6V2a1 1 0 0 1 1-1ZM3 5h12v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5Z" />
                     </svg>
                 </div>
@@ -109,14 +109,12 @@ const ChatRoom = () => {
 
     const handleSendMessage = async (e) => {
         e.preventDefault();
+        setMessage("");
         try {
             await apiPrivate.patch("chatroom/send-message", {
                 chatID: visibleChat._id,
                 message
             });
-            // const response2 = await apiPrivate.get(`chatroom/advert/${response1.data.advertId}`);
-            // setVisibleChat(response2.data);
-            // setMessage("");
             await handleReloadChat();
         } catch (error) {
             console.log(error);
@@ -124,15 +122,13 @@ const ChatRoom = () => {
 
     }
 
-    const handleDeleteMessage = async (msg) => {
+    const handleDeleteMessage = async (e,msg) => {
+        e.preventDefault();
         try {
             await apiPrivate.patch('chatroom/delete-message', {
                 messageID: msg._id,
                 chatID: visibleChat._id
             });
-            // const response2 = await apiPrivate.get(`chatroom/advert/${visibleChat.advertId}`);
-            // setVisibleChat(response2.data);
-            // setMessage("");
             await handleReloadChat();
         } catch (error) {
             console.log(error);
@@ -186,11 +182,11 @@ const ChatRoom = () => {
                                         <svg className="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 11 14H9a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 10 19Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                         </svg>
-                                        <p>
+                                        <p className="text-xs">
                                             {(user.firstName === chat.participants[0].firstName && user.lastName === chat.participants[0].lastName)
                                                 ? `${chat.participants[1].firstName} ${chat.participants[1].lastName}`
                                                 : `${chat.participants[0].firstName} ${chat.participants[0].lastName}`
-                                            }
+                                            } - {chat.advertId.title}
                                         </p>
                                     </li>
                                 ))
@@ -199,15 +195,15 @@ const ChatRoom = () => {
                         <div className="w-2/3 h-full flex items-center justify-center">
                             {chatView
                                 ? <div className="w-full h-full rounded-2xl bg-white border-2 border-black">
-                                    <div className="h-1/6 bg-blue-900 text-white font-bold rounded-t-2xl px-10 flex flex-row items-center justify-between">
+                                    <div className="h-1/6 bg-blue-900 text-white font-bold rounded-t-xl px-10 flex flex-row items-center justify-between">
                                         <p>
                                             {(user.firstName === visibleChat.participants[0].firstName && user.lastName === visibleChat.participants[0].lastName)
                                                 ? `${visibleChat.participants[1].firstName} ${visibleChat.participants[1].lastName}`
                                                 : `${visibleChat.participants[0].firstName} ${visibleChat.participants[0].lastName}`
-                                            }
+                                            } - {visibleChat.advertId.title}
                                         </p>
                                         <div className="flex flex-row gap-3 items-center">
-                                            <button onClick={() => navigate(`/advert/${visibleChat.advertId}`)} className="border-2 hover:bg-sky-700 bg-sky-500 py-1 px-1 rounded-xl border-transparent">Go to ad</button>
+                                            <button onClick={() => navigate(`/advert/${visibleChat.advertId._id}`)} className="border-2 hover:bg-sky-700 bg-sky-500 py-1 px-1 rounded-xl border-transparent">Go to ad</button>
                                             {/* <svg onClick={handleReloadChat} class="w-4 h-4 text-white hover:text-green-700 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
                                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 1v5h-5M2 19v-5h5m10-4a8 8 0 0 1-14.947 3.97M1 10a8 8 0 0 1 14.947-3.97" />
                                             </svg> */}
