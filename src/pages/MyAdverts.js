@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import HomePageNavbar from './HomePageNavbar';
-import Footer from './Footer';
+import HomePageNavbar from '../components/HomePageNavbar';
+import Footer from '../components/Footer';
 import useApiPrivate from '../hooks/useAPIPrivate';
-import AdvertCard from './AdvertCard';
+import AdvertCard from '../components/AdvertCard';
 import { Link } from "react-router-dom";
 
 function MyAdverts() {
@@ -56,11 +56,14 @@ function MyAdverts() {
                     </li>
                 </ol>
             </nav>
-            <h4 className="text-2xl font-extrabold mx-28 mb-4 dark:text-white py-4">My Adverts</h4>
+
+            <h1 className="font-bold text-3xl mb-4 ml-20 mt-10">My Advertisements</h1>
             <div className="grid grid-cols-1sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mx-28 mb-10 gap-5">
                 {adverts.length === 0 ? (
+
                     <p>No Adverts</p>
-                ) : (
+                ) 
+                : (
                     adverts.map((advert, index) => (
                         <AdvertCard key={index} advert={advert} />
                     ))
