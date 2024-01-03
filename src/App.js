@@ -21,40 +21,11 @@ import PublicRouteLogin from "./components/PublicRouteLogin";
 
 import MyAdverts from "./pages/MyAdverts";
 import SearchResultsPage from "./pages/SearchResultsPage";
+import WishlistPage from "./pages/WIshlistPage";
 
 
 
 function App() {
-
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
-
-  // useEffect(() => {
-  //     if (!auth?.email) {
-
-  //         const storedAccessToken = localStorage.getItem('accessToken');
-
-  //         if (storedAccessToken) {
-
-  //             const decodedToken = jwtDecode(storedAccessToken);
-  //             const { email, role } = decodedToken;
-
-  //             // setAuth({
-  //             //     accessToken: storedAccessToken,
-  //             //     email,
-  //             //     role,
-  //             // });
-  //             dispatch(setAuthValues({ email, role, accessToken: storedAccessToken }));
-
-  //             if (role === 'user') {
-  //                 navigate('/home');
-  //             } else if (role === 'admin') {
-  //                 navigate('/admin-dashboard');
-  //             }
-
-  //         }
-  //     }
-  // },[auth?.email,dispatch,navigate]);
 
   return (
     <Routes>
@@ -76,10 +47,9 @@ function App() {
           <Route path="/home/create-ad" element={<CreateAd/>}/>
           <Route path="/advert/:id" element={<AdvertPage/>}/>
           <Route path="/my-adverts" element={<MyAdverts/>}/>
+          <Route path="/my-wishlist" element={<WishlistPage/>}/>
           <Route path="/results" element={<SearchResultsPage/>}/>
         </Route>
-
-
 
         {/* admin routes */}
         <Route element={<RequiredAuth allowedRole="admin" />}>

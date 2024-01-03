@@ -13,9 +13,10 @@ function SearchResultsPage() {
 
   useEffect(() => {
     console.log(state.searchValue)
-    const getAdvertsbySearch = async () => {
+
+    const getAdvertsBySearch = async () => {
       try {
-        await apiPrivate.get('/advert', { params: {title: state.searchValue}}).then((res) => {
+        await apiPrivate.get('advert/search', { params: {title: state.searchValue, categoryId : state.categoryId}}).then((res) => {
           if (res.status === 200) {
             setAdverts(res.data);
           }
@@ -27,22 +28,22 @@ function SearchResultsPage() {
     };
     
 
-    getAdvertsbySearch();
+    getAdvertsBySearch();
 
-  }, [state.searchValue]);
+  }, [state.searchValue,apiPrivate,state.categoryId]);
 
   return (
     <div>
       <HomePageNavbar/>
-      <h1 className="font-bold text-3xl mb-4 ml-20 mt-10">{state.searchValue}</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ml-20 mb-10">
+      <h1 className="mb-4 mx-28 mt-10 text-2xl font-extrabold dark:text-white">search result</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mx-28 mb-10 gap-5">
         {adverts.length === 0 
         ? (
         <p>No Adverts Found</p>
         ) 
         : (
           adverts.map((advert, index) => (
-          <AdvertCard key={index} advert={advert}/>
+          <AdvertCard key={index} advert={advert} onHomePage={true}/>
           ))
           )}
       </div>
