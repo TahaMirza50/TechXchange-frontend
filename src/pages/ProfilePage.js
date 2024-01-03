@@ -57,7 +57,7 @@ const ProfilePage = () => {
 
     return (
         <div>
-            <HomePageNavbar />
+            <HomePageNavbar page="profile"/>
             <div className="flex mx-28 my-10 flex-col gap-10">
                 <nav aria-label="Breadcrumb">
                     <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">

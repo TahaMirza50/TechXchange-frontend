@@ -37,7 +37,7 @@ const WishlistPage = () => {
     
         return (
             <div>
-                <HomePageNavbar />
+                <HomePageNavbar page="my-wishlist"/>
                 <nav className="flex mx-28 my-10" aria-label="Breadcrumb">
                     <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
                         <li className="inline-flex items-center">

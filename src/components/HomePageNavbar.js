@@ -8,7 +8,7 @@ import NotificationCard from './NotificationCard';
 import { removeAuthValues } from '../features/auth';
 import { useNavigate } from 'react-router-dom';
 
-const HomePageNavbar = () => {
+const HomePageNavbar = ({ page }) => {
 
     const [notBox, setNotBox] = useState(null);
     const [searchValue, setSearchValue] = useState('');
@@ -91,7 +91,7 @@ const HomePageNavbar = () => {
                             </li>
                             <div className="flex items-center">
                                 <li>
-                                    <Link to="/profile" className=" block py-2 px-3 text-gray-900 rounded hover:text-white dark:text-white hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-white md:p-0 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-gray-700 md:dark:hover:bg-transparent">
+                                    <Link to="/profile" className={`block rounded ${page === "profile" ? "text-white pointer-events-none" : "text-gray-900 hover:text-white"}`}>
                                         <div className='flex gap-1 items-center'>
                                             <svg className="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 18">
                                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 8a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm-2 3h4a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z" />
@@ -114,11 +114,6 @@ const HomePageNavbar = () => {
                                 </li>
                             </div>
                             <div className='flex items-center'>
-                                {/* <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" type="button" className="notification-btn" onClick={() => setOpenNotBox(false)}>
-                                <svg className="w-5 h-5 text-gray-800 dark:text-white hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 21">
-                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 3.464V1.1m0 2.365a5.338 5.338 0 0 1 5.133 5.368v1.8c0 2.386 1.867 2.982 1.867 4.175C15 15.4 15 16 14.462 16H1.538C1 16 1 15.4 1 14.807c0-1.193 1.867-1.789 1.867-4.175v-1.8A5.338 5.338 0 0 1 8 3.464ZM4.54 16a3.48 3.48 0 0 0 6.92 0H4.54Z" />
-                                </svg>
-                            </button> */}
                                 <Dropdown label="" className="w-1/4 h-2/3 overflow-auto rounded-md" dismissOnClick={false}
                                     renderTrigger={() =>
                                         <div className="relative">
@@ -158,8 +153,8 @@ const HomePageNavbar = () => {
                     <div className='w-1/2'>
                         <form onSubmit={(e) => {
                             e.preventDefault();
-                            navigate('/results', { state: {searchValue} })
-                            }}>
+                            navigate('/results', { state: { searchValue } })
+                        }}>
                             <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                             <div className="relative">
                                 <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -175,16 +170,16 @@ const HomePageNavbar = () => {
                     <div className="flex flex-row items-center">
                         <ul className="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm">
                             <li>
-                                <Link to="/home" className="text-white dark:text-white hover:text-sky-500" aria-current="page">Home</Link>
+                                <Link to="/home" className={`${page === "home" ? "text-sky-500 pointer-events-none" : "text-white hover:text-sky-500"}`} aria-current="page">Home</Link>
                             </li>
                             <li>
-                                <Link to="/my-adverts" className="text-white dark:text-white hover:text-sky-500" aria-current="page">My Adverts</Link>
+                                <Link to="/my-adverts" className={`${page === "my-adverts" ? "text-sky-500 pointer-events-none" : "text-white hover:text-sky-500"}`} aria-current="page">My Adverts</Link>
                             </li>
                             <li>
-                                <Link to="/chats" className="text-white dark:text-white hover:text-sky-500">My Chats</Link>
+                                <Link to="/chats" className={`${page === "chats" ? "text-sky-500 pointer-events-none" : "text-white hover:text-sky-500"}`}>My Chats</Link>
                             </li>
                             <li>
-                                <Link to="/my-wishlist" className="text-white dark:text-white hover:text-sky-500">My Wishlist</Link>
+                                <Link to="/my-wishlist" className={`${page === "my-wishlist" ? "text-sky-500 pointer-events-none" : "text-white hover:text-sky-500"}`}>My Wishlist</Link>
                             </li>
                         </ul>
                     </div>
