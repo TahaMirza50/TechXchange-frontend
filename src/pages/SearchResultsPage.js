@@ -35,8 +35,8 @@ function SearchResultsPage() {
   return (
     <div>
       <HomePageNavbar/>
-      <h1 className="font-bold text-3xl mb-4 ml-20 mt-10">{state.searchValue}</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ml-20 mb-10">
+      <h1 className="mb-4 mx-28 mt-10 text-2xl font-extrabold dark:text-white">result for search query '{state.searchValue}'</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mx-28 mb-10">
         {adverts.length === 0 
         ? (
         <p>No Adverts Found</p>

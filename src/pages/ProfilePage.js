@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import HomePageNavbar from "../components/HomePageNavbar";
 import { useSelector } from "react-redux";
+import SocialMediaCard from "../components/SocialMediaCard";
 
 const ProfilePage = () => {
 
@@ -107,10 +108,10 @@ const ProfilePage = () => {
                             </div>
                         }
                         <h6 className="text-lg font-bold">Social Media</h6>
-                        <div className="flex flex-col">
-                        {user.socialMediaLinks.map((link) => 
-                            <a className="hover:text-sky-500" target="_blank" rel="noopener noreferrer" href={`${link}`}>{link}</a>
-                        )}
+                        <div className="flex flex-row items-center">
+                            {user.socialMediaLinks.map((link) =>
+                                <SocialMediaCard link={link} />
+                            )}
                         </div>
                     </div>
 
@@ -122,4 +123,3 @@ const ProfilePage = () => {
 }
 
 export default ProfilePage;
- 

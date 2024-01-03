@@ -184,7 +184,7 @@ const HomePageNavbar = () => {
                                 <Link to="/chats" className="text-white dark:text-white hover:text-sky-500">My Chats</Link>
                             </li>
                             <li>
-                                <Link to="#" className="text-white dark:text-white hover:text-sky-500">My Wishlist</Link>
+                                <Link to="/my-wishlist" className="text-white dark:text-white hover:text-sky-500">My Wishlist</Link>
                             </li>
                         </ul>
                     </div>
