@@ -3,8 +3,10 @@ import Footer from "../components/Footer";
 import HomePageNavbar from "../components/HomePageNavbar";
 import { Carousel } from "flowbite-react";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useApiPrivate from "../hooks/useAPIPrivate";
+import { wishlist } from "../features/userProfile";
+import SocialMediaCard from "../components/SocialMediaCard";
 
 const AdvertPage = () => {
     const { id } = useParams();
@@ -21,7 +23,9 @@ const AdvertPage = () => {
     const [categoryName, setCategoryName] = useState("");
     const [userProfile, setUserProfile] = useState(null);
 
-    const [chatLoading,setChatLoading] = useState(false);
+    const [wishListed, setWishListed] = useState(false);
+    const [chatLoading, setChatLoading] = useState(false);
+    const dispatch = useDispatch();
 
     useEffect(() => {
 
@@ -30,6 +34,10 @@ const AdvertPage = () => {
                 const response = await apiPrivate.get(`/advert/get/${id}`);
                 if (response.status === 200) {
                     setAdvert(response.data);
+                    if (user.wishlist.includes(id))
+                        setWishListed(true);
+                    else
+                        setWishListed(false);
                     if (user.profileID === response.data.userId) {
                         setMyAd(true);
                         setUserProfile(user);
@@ -52,18 +60,17 @@ const AdvertPage = () => {
 
         getAdvertAndUser();
 
-    }, [apiPrivate, id, user.profileID, user, categories])
+    }, [categories,apiPrivate, id, user])
 
-    const handleChatNow = async (userOneID,userTwoID) => {
+    const handleChatNow = async (userOneID, userTwoID) => {
         setChatLoading(true);
         try {
-            console.log(id,userOneID,userTwoID);
-            const response = await apiPrivate.post('chatroom/create', 
-            {
-                advertId: id,
-                participants: [userOneID,userTwoID]
-            })
-            if(response.status === 200){
+            const response = await apiPrivate.post('chatroom/create',
+                {
+                    advertId: id,
+                    participants: [userOneID, userTwoID]
+                })
+            if (response.status === 200) {
                 setChatLoading(false);
                 navigate(`/chats`);
             }
@@ -88,6 +95,28 @@ const AdvertPage = () => {
         }
 
         return stars;
+    }
+
+    const addToWishlist = async () => {
+        const newWishlist = [...user.wishlist, advert._id];
+        try {
+            const response = await apiPrivate.patch(`wishlist/add/${advert._id}`);
+            if (response.status === 200)
+                dispatch(wishlist(newWishlist));
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const removeFromWishlist = async () => {
+        const newWishlist = user.wishlist.filter((item) => item !== advert._id);
+        try {
+            const response = await apiPrivate.patch(`wishlist/remove/${advert._id}`);
+            if (response.status === 200)
+                dispatch(wishlist(newWishlist));
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     return (
@@ -123,11 +152,16 @@ const AdvertPage = () => {
                         <img className="max-h-full max-w-fit" src={advert.images[2]} alt="..." />
                     </Carousel>
                     <div className="flex flex-row w-full px-5 py-2 items-center justify-between">
-                        {!myAd
-                            ? <svg className="w-4 h-4 text-gray-800 dark:text-white hover:text-red-700" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 21 19">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4C5.5-1.5-1.5 5.5 4 11l7 7 7-7c5.458-5.458-1.542-12.458-7-7Z" />
-                            </svg>
-                            : <div></div>}
+                        {myAd ||
+                            (wishListed ?
+                                <svg onClick={removeFromWishlist} class="w-5 h-5 text-red-700 dark:text-white hover:text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                                    <path d="M17.947 2.053a5.209 5.209 0 0 0-3.793-1.53A6.414 6.414 0 0 0 10 2.311 6.482 6.482 0 0 0 5.824.5a5.2 5.2 0 0 0-3.8 1.521c-1.915 1.916-2.315 5.392.625 8.333l7 7a.5.5 0 0 0 .708 0l7-7a6.6 6.6 0 0 0 2.123-4.508 5.179 5.179 0 0 0-1.533-3.793Z" />
+                                </svg>
+                                :
+                                <svg onClick={addToWishlist} class="w-5 h-5 text-gray-800 dark:text-white hover:text-red-700" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 21 19">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4C5.5-1.5-1.5 5.5 4 11l7 7 7-7c5.458-5.458-1.542-12.458-7-7Z" />
+                                </svg>
+                            )}
                         <p className="font-bold text-2xl text-blue-900">Rs. {advert.price}</p>
                     </div>
                     <p className="px-5 font-bold">Description:</p>
@@ -176,14 +210,14 @@ const AdvertPage = () => {
                                 <p>{userProfile.contact}</p>
                             </div>
                             <h6 className="text-md font-bold">Social Media Links</h6>
-                            <div className="flex flex-col">
+                            <div className="flex flex-row items-center">
                                 {userProfile.socialMediaLinks.map((link) =>
-                                    <a className="hover:text-sky-500 text-sm" target="_blank" rel="noopener noreferrer" href={`${link}`}>{link}</a>
+                                    <SocialMediaCard link={link} />
                                 )}
                             </div>
                         </div>
                     }
-                    {!myAd && <button disabled={chatLoading} onClick={() => {handleChatNow(userProfile._id,user.profileID)}} className="text-white mb-5 w-1/3 font-bold border-2 hover:bg-sky-700 bg-sky-500 py-1 px-1 rounded-xl border-transparent">Chat Now</button>}
+                    {!myAd && <button disabled={chatLoading} onClick={() => { handleChatNow(userProfile._id, user.profileID) }} className="text-white mb-5 w-1/3 font-bold border-2 hover:bg-sky-700 bg-sky-500 py-1 px-1 rounded-xl border-transparent">Chat Now</button>}
                 </div>
             </div>}
             <Footer />

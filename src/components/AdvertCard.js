@@ -46,12 +46,24 @@ const AdvertCard = ({ advert, setUserAction, onHomePage }) => {
 
     const addToWishlist = async () => {
         const newWishlist = [...user.wishlist, advert._id];
-        dispatch(wishlist(newWishlist));
+        try {
+            const response = await apiPrivate.patch(`wishlist/add/${advert._id}`);
+            if(response.status === 200)
+                dispatch(wishlist(newWishlist));
+        } catch (error) {
+            console.error(error);            
+        }
     }
 
     const removeFromWishlist = async () => {
         const newWishlist = user.wishlist.filter((item) => item !== advert._id);
-        dispatch(wishlist(newWishlist));
+        try {
+            const response = await apiPrivate.patch(`wishlist/remove/${advert._id}`);
+            if(response.status === 200)
+                dispatch(wishlist(newWishlist));
+        } catch (error) {
+            console.error(error);            
+        }
     }
 
     return (
