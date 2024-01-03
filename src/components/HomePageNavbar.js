@@ -170,10 +170,10 @@ const HomePageNavbar = ({ page }) => {
                     <div className="flex flex-row items-center">
                         <ul className="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm">
                             <li>
-                                <Link to="/home" className={`${page === "home" ? "text-sky-500 pointer-events-none" : "text-white hover:text-sky-500"}`} aria-current="page">Home</Link>
+                                <Link to="/home" className={`${page === "home" ? "text-sky-500 pointer-events-none" : "text-white hover:text-sky-500"}`}>Home</Link>
                             </li>
                             <li>
-                                <Link to="/my-adverts" className={`${page === "my-adverts" ? "text-sky-500 pointer-events-none" : "text-white hover:text-sky-500"}`} aria-current="page">My Adverts</Link>
+                                <Link to="/my-adverts" className={`${page === "my-adverts" ? "text-sky-500 pointer-events-none" : "text-white hover:text-sky-500"}`}>My Adverts</Link>
                             </li>
                             <li>
                                 <Link to="/chats" className={`${page === "chats" ? "text-sky-500 pointer-events-none" : "text-white hover:text-sky-500"}`}>My Chats</Link>
