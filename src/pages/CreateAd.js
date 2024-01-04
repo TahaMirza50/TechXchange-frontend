@@ -55,7 +55,6 @@ const CreateAd = () => {
         if (imageOneUpload && imageTwoUpload && imageThreeUpload) {
             try {
                 setConfirm(true);
-                console.log("ipload");
                 const response = await apiPrivate.post("/advert/new", {
                     title: adDetails.title,
                     description: adDetails.description,

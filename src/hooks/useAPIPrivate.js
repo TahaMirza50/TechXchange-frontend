@@ -30,11 +30,7 @@ const useApiPrivate = () => {
                     prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
                     return apiPrivate(prevRequest);
                 }
-                // if(error?.response.status === 403){
-                //     localStorage.removeItem('accessToken');
-                //     navigate(0);
-                //     return;
-                // }
+
                 return Promise.reject(error);
             }
         )

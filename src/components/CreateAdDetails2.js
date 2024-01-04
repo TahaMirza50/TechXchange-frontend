@@ -58,12 +58,6 @@ const CreateAdDetails2 = ({ values, prevStep, onImageChange, handleSubmit, confi
                     <button disabled={confirm} type="submit" class="w-1/5 h-12 text-white bg-blue-900 hover:bg-green-700 focus:ring-2 focus:outline-none focus:ring-black font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Confirm</button>
                     <button disabled={confirm} type="button" onClick={Previous} class="w-1/5 h-12 text-white bg-sky-500 hover:bg-sky-700 focus:ring-2 focus:outline-none focus:ring-black font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Previous</button>
                 </div>
-                {
-                    /* {openModal && <ModalAlerts heading={heading} message={message} onClose={() => { setOpenModal(false) }} />}
-                    <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                       Already have an account? <a href="/login" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
-                    </p> */
-                }
             </form >
         </div >
     );
