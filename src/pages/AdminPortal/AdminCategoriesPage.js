@@ -1,6 +1,3 @@
-import ImageCard from "../../components/AdminComponents/ImageCard";
-import image from "../../assets/images/categories.jpg"
-
 import { useEffect, useState } from 'react';
 import useApiPrivate from "../../hooks/useAPIPrivate";
 
