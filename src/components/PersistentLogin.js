@@ -82,54 +82,7 @@ const PersistentLogin = () => {
         }
     }, [dispatch, auth, refresh])
 
-    // useEffect(() => {
-    //     console.log(auth)
-
-    //     const getProfile = async () => {
-    //         try {
-    //             const response = await apiPrivate.get('profile/get');
-    //             if (response.status === 200) {
-    //                 dispatch(profile(
-    //                     {
-    //                         firstName: response.data.firstName,
-    //                         lastName: response.data.lastName,
-    //                         profileID: response.data._id,
-    //                         notificationsID: response.data.notificationsID,
-    //                         address: response.data.address,
-    //                         contact: response.data.contact,
-    //                         CNIC: response.data.CNIC,
-    //                         rating: response.data.rating,
-    //                         numberOfReviews: response.data.numberOfReviews,
-    //                         socialMediaLinks: response.data.socialMediaLinks
-    //                     }
-    //                 ));
-    //             }
-    //         } catch (error) {
-    //             console.error(error);
-    //         }
-    //     };
-
-    //     const getCategories = async () => {
-    //         try {
-    //             const response = await apiPrivate.get('category');
-    //             if (response.status === 200) {
-    //                 dispatch(category(response.data));
-    //             }
-    //         } catch (error) {
-    //             console.error(error);
-    //         }
-    //     };
-
-    //     getProfile();
-    //     getCategories();
-
-    // },[dispatch,auth])
-
-    // useEffect(()=> {
-    //     console.log(`isLoading: ${isLoading}`)
-    //     console.log(`auth: ${JSON.stringify(auth)}`)
-    // },[isLoading]),
-
+    
     return (
         <>
             {isLoading

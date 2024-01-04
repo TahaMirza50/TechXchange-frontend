@@ -9,7 +9,6 @@ import { setAuthValues } from "../features/auth";
 
 const Login = () => {
     const dispatch = useDispatch();
-    // const { setAuth } = useAuth();
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
     
@@ -34,7 +33,6 @@ const Login = () => {
             }).then((res) => {
                 if (res.status === 200) {
                     const {accessToken} = res.data;
-                    // localStorage.setItem("accessToken", accessToken);
 
                     const decodedToken = jwtDecode(accessToken);
                     const role = decodedToken.role;
