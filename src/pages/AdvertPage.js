@@ -181,12 +181,12 @@ const AdvertPage = () => {
                     <div className="h-10" />
                     <div className="flex flex-row items-center pb-2 px-5 w-full justify-between">
                         <p className="text-gray-400">{formattedDate + " " + formattedTime}</p>
-                        <button className="gap-2 text-red-700 font-bold flex-row flex hover:text-red-900 items-center">
+                        {!myAd && <button className="gap-2 text-red-700 font-bold flex-row flex hover:text-red-900 items-center">
                             <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
                                 <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M6 1v4a1 1 0 0 1-1 1H1m14-4v16a.97.97 0 0 1-.933 1H1.933A.97.97 0 0 1 1 18V5.828a2 2 0 0 1 .586-1.414l2.828-2.828A2 2 0 0 1 5.828 1h8.239A.97.97 0 0 1 15 2Z" />
                             </svg>
                             <p>Report Advert</p>
-                        </button>
+                        </button>}
                     </div>
                 </div>
                 <div className="border-2 h-full w-1/3 rounded-md flex flex-col items-center">
