@@ -27,13 +27,7 @@ const PersistentLogin = () => {
         const getProfile = async () => {
             try {
                 console.log(auth.accessToken)
-                const response = await apiPrivate.get('profile/get',
-                    {
-                        headers: {
-                            Authorization: `Bearer ${auth.accessToken}`
-                        }
-                    }
-                );
+                const response = await apiPrivate.get('profile/get');
                 if (response.status === 200) {
                     dispatch(profile(
                         {
@@ -58,13 +52,7 @@ const PersistentLogin = () => {
 
         const getCategories = async () => {
             try {
-                const response = await apiPrivate.get('category',
-                    {
-                        headers: {
-                            Authorization: `Bearer ${auth.accessToken}`
-                        }
-                    }
-                );
+                const response = await apiPrivate.get('category');
                 if (response.status === 200) {
                     dispatch(category(response.data));
                 }
@@ -82,7 +70,7 @@ const PersistentLogin = () => {
         }
     }, [dispatch, auth, refresh])
 
-    
+
     return (
         <>
             {isLoading

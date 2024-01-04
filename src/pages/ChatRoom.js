@@ -203,7 +203,7 @@ const ChatRoom = () => {
                                             } - {visibleChat.advertId.title}
                                         </p>
                                         <div className="flex flex-row gap-3 items-center">
-                                            <button disabled={visibleChat.disabled} onClick={() => navigate(`/advert/${visibleChat.advertId._id}`)} className="border-2 hover:bg-sky-700 bg-sky-500 py-1 px-1 rounded-xl border-transparent">Go to ad</button>
+                                            <button disabled={visibleChat.disabled} onClick={() => navigate(`/advert/${visibleChat.advertId._id}`)} className={`border-2 ${!visibleChat.disabled ? "hover:bg-sky-700" : ""} bg-sky-500 py-1 px-1 rounded-xl border-transparent`}>Go to ad</button>
                                             <svg onClick={handleDeleteChatroom} className="w-4 h-4 dark:text-white hover:text-red-700" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
                                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h16M7 8v8m4-8v8M7 1h4a1 1 0 0 1 1 1v3H6V2a1 1 0 0 1 1-1ZM3 5h12v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5Z" />
                                             </svg>
@@ -225,7 +225,7 @@ const ChatRoom = () => {
                                                 </button>
                                             </div>
                                             : <div className="flex flex-row justify-center w-full px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700">
-                                                <p>Ad has been deleted.</p>
+                                                <p>Ad has been sold or deleted.</p>
                                             </div>
                                         }
 

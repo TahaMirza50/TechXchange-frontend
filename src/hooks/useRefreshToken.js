@@ -27,7 +27,6 @@ const useRefreshToken = () => {
                     })
                     if (response.status === 200) {
                         dispatch(removeAuthValues());
-
                     }
                 } catch (error) {
                     console.log(error)
