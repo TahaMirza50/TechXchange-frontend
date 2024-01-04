@@ -36,13 +36,15 @@ const CreateAd = () => {
             if (event.target.files[0])
             setImageTwoUpload(true)
         else
-            setImageTwoUpload(false)        }
+            setImageTwoUpload(false)        
+        }
         else {
             setImageThree(event.target.files[0]);
             if (event.target.files[0])
             setImageThreeUpload(true)
         else
-            setImageThreeUpload(false)        }
+            setImageThreeUpload(false)        
+        }
     }
 
     const setOnContinue = (title, address, description, price, condition, category) => {
