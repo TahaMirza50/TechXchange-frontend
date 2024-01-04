@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
 
 const CreateAdDetails1 = ({ categories, values, setOnContinue, nextStep }) => {
 

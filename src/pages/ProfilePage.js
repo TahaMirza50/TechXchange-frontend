@@ -6,36 +6,7 @@ import SocialMediaCard from "../components/SocialMediaCard";
 
 const ProfilePage = () => {
 
-    // const [profile, setProfile] = useState({});
-    // const apiPrivate = useApiPrivate();
-
     const user = useSelector((state) => state.userProfile.value);
-
-
-    // useEffect(() => {
-    //     let isMounted = true;
-    //     const controller = new AbortController();
-
-    //     const getProfile = async () => {
-    //         try {
-    //             const response = await apiPrivate.get(`profile/get/${user.profileID}`);
-    //             if (isMounted) {
-    //                 setProfile(response.data);
-    //             }
-    //         } catch (error) {
-    //             console.error(error);
-    //         }
-    //     };
-
-    //     getProfile();
-
-
-    //     return () => {
-    //         isMounted = false;
-    //         controller.abort();
-    //     };
-
-    // }, [apiPrivate,user.profileID])
 
     const renderStar = (num) => {
         const stars = [];
