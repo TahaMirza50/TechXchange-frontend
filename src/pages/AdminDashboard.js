@@ -7,7 +7,6 @@ import { useDispatch } from "react-redux";
 import { apiPrivate } from "../services/api";
 
 const AdminDashboard = () => {
-    // const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const handleLogOut = async () => {

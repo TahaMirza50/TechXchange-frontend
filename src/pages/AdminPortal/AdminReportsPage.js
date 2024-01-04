@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import useApiPrivate from "../../hooks/useAPIPrivate";
 import ReportDetailsPopup from "../../components/AdminComponents/ReportDetailsPopup"
-import { Button } from 'flowbite-react';
 
 const AdminReportsPage = () => {
     const [reports, setReports] = useState([{}]);

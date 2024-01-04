@@ -157,7 +157,7 @@ const AdminAdvertisementsPage = () => {
           <img
             src={selectedImage}
             alt="Selected Image"
-            className="max-h-full max-w-full cursor-pointer"
+            className="h-[600px] w-[700px] cursor-pointer"
             onClick={closeImageModal}
           />
         </div>

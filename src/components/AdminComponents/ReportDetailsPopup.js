@@ -68,10 +68,8 @@ const ReportDetailsPopup = ({ report, advert, closePopup, apiPrivate}) => {
             <p>
               <span className="font-bold">Status:</span> {advert.status}
             </p>
-            {/* Add logic to display images */}
             
-            
-            {/* Close button */}
+
           <button
             onClick={closePopup}
             className="mt-6 p-2 bg-blue-500 text-white rounded cursor-pointer hover:bg-blue-600 transition duration-300"
@@ -79,7 +77,7 @@ const ReportDetailsPopup = ({ report, advert, closePopup, apiPrivate}) => {
             Close
           </button>
   
-          {/* Delete button */}
+          
           <span>
             {
               advertDeleted === false
@@ -126,7 +124,7 @@ const ReportDetailsPopup = ({ report, advert, closePopup, apiPrivate}) => {
           <img
             src={selectedImage}
             alt="Selected Image"
-            className="max-h-full max-w-full cursor-pointer"
+            className="h-[600px] w-[600px] max-w-full cursor-pointer"
             onClick={closeImageModal}
           />
         </div>
@@ -135,8 +133,5 @@ const ReportDetailsPopup = ({ report, advert, closePopup, apiPrivate}) => {
     );
   };
   
-  // {advert.images.map((image, index) => (
-  //   <img key={index} src={image} alt={`Image ${index}`} style={{ width: '100px', height: 'auto', display: 'block' }} className="mb-2" data-carousel-item/>
-  // ))}
   export default ReportDetailsPopup;
   
