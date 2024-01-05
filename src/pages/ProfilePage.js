@@ -2,39 +2,11 @@ import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import HomePageNavbar from "../components/HomePageNavbar";
 import { useSelector } from "react-redux";
+import SocialMediaCard from "../components/SocialMediaCard";
 
 const ProfilePage = () => {
 
-    // const [profile, setProfile] = useState({});
-    // const apiPrivate = useApiPrivate();
-
     const user = useSelector((state) => state.userProfile.value);
-
-
-    // useEffect(() => {
-    //     let isMounted = true;
-    //     const controller = new AbortController();
-
-    //     const getProfile = async () => {
-    //         try {
-    //             const response = await apiPrivate.get(`profile/get/${user.profileID}`);
-    //             if (isMounted) {
-    //                 setProfile(response.data);
-    //             }
-    //         } catch (error) {
-    //             console.error(error);
-    //         }
-    //     };
-
-    //     getProfile();
-
-
-    //     return () => {
-    //         isMounted = false;
-    //         controller.abort();
-    //     };
-
-    // }, [apiPrivate,user.profileID])
 
     const renderStar = (num) => {
         const stars = [];
@@ -56,7 +28,7 @@ const ProfilePage = () => {
 
     return (
         <div>
-            <HomePageNavbar />
+            <HomePageNavbar page="profile"/>
             <div className="flex mx-28 my-10 flex-col gap-10">
                 <nav aria-label="Breadcrumb">
                     <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
@@ -107,10 +79,10 @@ const ProfilePage = () => {
                             </div>
                         }
                         <h6 className="text-lg font-bold">Social Media</h6>
-                        <div className="flex flex-col">
-                        {user.socialMediaLinks.map((link) => 
-                            <a className="hover:text-sky-500" target="_blank" rel="noopener noreferrer" href={`${link}`}>{link}</a>
-                        )}
+                        <div className="flex flex-row items-center">
+                            {user.socialMediaLinks.map((link) =>
+                                <SocialMediaCard link={link} />
+                            )}
                         </div>
                     </div>
 
@@ -122,4 +94,3 @@ const ProfilePage = () => {
 }
 
 export default ProfilePage;
- 

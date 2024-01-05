@@ -102,7 +102,7 @@ const HomePage = () => {
 
     return (
         <div>
-            <HomePageNavbar />
+            <HomePageNavbar page="home"/>
             <div className="flex flex-col items-center mx-28">
                 <section className="bg-gradient-to-r from-sky-500 to-blue-900 my-10 w-full">
                     <div className="grid max-w-screen-xl px-16 pt-12 mx-auto lg:gap-8 xl:gap-2 lg:pt-12 lg:grid-cols-12">

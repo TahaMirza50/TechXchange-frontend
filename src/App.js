@@ -21,6 +21,7 @@ import PublicRouteLogin from "./components/PublicRouteLogin";
 
 import MyAdverts from "./pages/MyAdverts";
 import SearchResultsPage from "./pages/SearchResultsPage";
+import WishlistPage from "./pages/WIshlistPage";
 
 
 
@@ -46,6 +47,7 @@ function App() {
           <Route path="/home/create-ad" element={<CreateAd/>}/>
           <Route path="/advert/:id" element={<AdvertPage/>}/>
           <Route path="/my-adverts" element={<MyAdverts/>}/>
+          <Route path="/my-wishlist" element={<WishlistPage/>}/>
           <Route path="/results" element={<SearchResultsPage/>}/>
         </Route>
 
